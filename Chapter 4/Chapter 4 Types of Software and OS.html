@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Types of Software and Operating Systems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-option {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .correct {
+            background-color: #d1fae5 !important; /* Tailwind green-100 */
+            border-color: #10b981 !important; /* Tailwind green-500 */
+            color: #047857; /* Tailwind green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2 !important; /* Tailwind red-100 */
+            border-color: #ef4444 !important; /* Tailwind red-500 */
+            color: #b91c1c; /* Tailwind red-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Types of Software and Operating Systems</h1>
+            <p class="text-gray-500 mt-2">Test your knowledge of the Chapter 4.</p>
+        </header>
+
+        <div id="quiz-container" class="space-y-8">
+            </div>
+
+        <div id="results-container" class="text-center mt-10 hidden">
+            <h2 id="score-text" class="text-2xl font-bold mb-4"></h2>
+            <button id="redo-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Redo Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+    {
+        "question": "Which type of software is responsible for managing the computer's memory, processes, and all of its software and hardware?",
+        "options": ["Application software", "Utility software", "Operating system", "Firmware"],
+        "answer": "Operating system"
+    },
+    {
+        "question": "A user is writing a letter to a friend. What category of software would a word processor fall under?",
+        "options": ["System software", "Application software", "Utility software", "Operating system"],
+        "answer": "Application software"
+    },
+    {
+        "question": "What is the main function of a device driver?",
+        "options": ["To manage the computer's file system.", "To act as a translator between the operating system and a hardware device.", "To provide a user interface.", "To scan the computer for viruses."],
+        "answer": "To act as a translator between the operating system and a hardware device."
+    },
+    {
+        "question": "Which of the following is a key task performed by an operating system?",
+        "options": ["Creating a spreadsheet", "Browsing the internet", "Managing interrupts", "Editing a photograph"],
+        "answer": "Managing interrupts"
+    },
+    {
+        "question": "A user wants to remove unnecessary files and reorganise the hard disk to improve performance. Which type of utility software should they use?",
+        "options": ["Antivirus", "Disk defragmenter", "Backup utility", "File compression"],
+        "answer": "Disk defragmenter"
+    },
+    {
+        "question": "What is the purpose of a Graphical User Interface (GUI)?",
+        "options": ["To manage network connections.", "To allow users to interact with the computer using visual elements like icons, windows, and menus.", "To translate high-level code into machine code.", "To control the boot-up process of the computer."],
+        "answer": "To allow users to interact with the computer using visual elements like icons, windows, and menus."
+    },
+    {
+        "question": "A programmer is writing code to control a washing machine's wash cycle. The software is stored on a ROM chip. What type of software is this?",
+        "options": ["Generic application software", "Utility software", "Embedded system software", "Operating system"],
+        "answer": "Embedded system software"
+    },
+    {
+        "question": "Which of the following is an example of system software?",
+        "options": ["Video game", "Web browser", "Device driver", "Database"],
+        "answer": "Device driver"
+    },
+    {
+        "question": "A signal sent from a hardware device or software program to the CPU, requiring immediate attention, is known as...",
+        "options": ["a buffer", "a process", "an interrupt", "a scheduler"],
+        "answer": "an interrupt"
+    },
+    {
+        "question": "An operating system uses memory management to...",
+        "options": ["ensure that all programs have enough storage space on the hard disk.", "keep track of which parts of memory are in use and allocate it to processes as needed.", "speed up the internet connection.", "organise files into folders."],
+        "answer": "keep track of which parts of memory are in use and allocate it to processes as needed."
+    },
+    {
+        "question": "Which utility program would be used to reduce the size of a file so it can be sent more easily over the internet?",
+        "options": ["Disk formatter", "Antivirus", "File compression", "Defragmenter"],
+        "answer": "File compression"
+    },
+    {
+        "question": "A Command Line Interface (CLI) requires a user to...",
+        "options": ["click on icons to run applications.", "type in specific text-based commands to perform tasks.", "use a mouse and pointer.", "interact with the system using menus and windows."],
+        "answer": "type in specific text-based commands to perform tasks."
+    },
+    {
+        "question": "A company needs software to manage its sales records and customer information. Which type of application software would be most suitable?",
+        "options": ["Word processor", "Spreadsheet", "Database management system", "Web browser"],
+        "answer": "Database management system"
+    },
+    {
+        "question": "What is the name for the process where the operating system handles the switching of the CPU between different tasks or users?",
+        "options": ["Buffering", "Interrupt handling", "Scheduling", "Memory allocation"],
+        "answer": "Scheduling"
+    },
+    {
+        "question": "Which of these is an example of an operating system?",
+        "options": ["Microsoft Office", "Google Chrome", "Adobe Photoshop", "Android"],
+        "answer": "Android"
+    },
+    {
+        "question": "A small amount of temporary memory storage used when transferring data between devices with different speeds is called a:",
+        "options": ["Driver", "Buffer", "Scheduler", "Register"],
+        "answer": "Buffer"
+    },
+    {
+        "question": "A user installs a new printer, but it doesn't work with their computer. What is the most likely missing piece of software?",
+        "options": ["The operating system", "An antivirus utility", "A device driver", "A word processor"],
+        "answer": "A device driver"
+    },
+    {
+        "question": "Which of the following is NOT a function of an operating system?",
+        "options": ["File management", "Processor management", "Providing a user interface", "Creating websites"],
+        "answer": "Creating websites"
+    },
+    {
+        "question": "Software that is created to perform one specific task or a set of tasks for a user is called...",
+        "options": ["System software", "Firmware", "Application software", "Utility software"],
+        "answer": "Application software"
+    },
+    {
+        "question": "Which type of software is designed to help maintain and care for the computer system?",
+        "options": ["Application software", "Embedded software", "Utility software", "Bespoke software"],
+        "answer": "Utility software"
+    },
+    {
+        "question": "When a computer is running multiple programs, the OS ensures they do not interfere with each other's allocated memory. This is an example of:",
+        "options": ["File management", "Security management", "Device management", "Memory management"],
+        "answer": "Memory management"
+    },
+    {
+        "question": "An interrupt service routine (ISR) is a piece of code that...",
+        "options": ["defragments the hard disk.", "is executed by the processor in response to an interrupt.", "provides a graphical user interface.", "compresses files to save space."],
+        "answer": "is executed by the processor in response to an interrupt."
+    },
+    {
+        "question": "What is the primary advantage of a GUI over a CLI for most users?",
+        "options": ["It uses less system memory.", "It gives the user more direct control over the system.", "It is more intuitive and easier to learn.", "It allows for faster execution of complex tasks."],
+        "answer": "It is more intuitive and easier to learn."
+    },
+    {
+        "question": "A company hires a developer to create software specifically for their unique accounting needs. This is an example of what kind of software?",
+        "options": ["Off-the-shelf software", "Utility software", "Bespoke software", "The operating system"],
+        "answer": "Bespoke software"
+    },
+    {
+        "question": "Which of these tasks is handled by the file management function of an operating system?",
+        "options": ["Allocating CPU time to different programs.", "Controlling access to files with permissions.", "Installing new hardware devices.", "Displaying icons on the desktop."],
+        "answer": "Controlling access to files with permissions."
+    }
+];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreText = document.getElementById('score-text');
+        const redoBtn = document.getElementById('redo-btn');
+
+        let score = 0;
+        let questionsAnswered = 0;
+
+        /**
+         * NEW: Function to shuffle an array in place using the Fisher-Yates algorithm.
+         * @param {Array} array The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // MODIFIED: Function to build and display the quiz
+        function buildQuiz() {
+            quizContainer.innerHTML = '';
+            
+            // Create a shuffled copy of the questions to not alter the original array
+            const shuffledQuestions = shuffleArray([...quizData]);
+
+            shuffledQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-block');
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('text-lg', 'font-semibold', 'mb-4');
+                questionTitle.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3');
+                
+                // Create a shuffled copy of the options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('quiz-option', 'w-full', 'p-3', 'text-left', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-100', 'hover:border-blue-500', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+                    button.innerText = option;
+                    // Pass the whole question object and the options container for context
+                    button.onclick = () => selectAnswer(button, option, currentQuestion, optionsDiv);
+                    optionsDiv.appendChild(button);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // MODIFIED: Function to handle answer selection
+        function selectAnswer(selectedButton, selectedOption, currentQuestion, optionsContainer) {
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const correctAnswer = currentQuestion.answer;
+
+            // Disable all buttons for this question to prevent changing the answer
+            options.forEach(button => {
+                button.disabled = true;
+                if (button.innerText === correctAnswer) {
+                    button.classList.add('correct');
+                }
+            });
+
+            if (selectedOption !== correctAnswer) {
+                selectedButton.classList.add('incorrect');
+            } else {
+                score++;
+            }
+
+            questionsAnswered++;
+
+            // Check if all questions have been answered
+            if (questionsAnswered === quizData.length) {
+                showResults();
+            }
+        }
+
+        // Function to display the final score
+        function showResults() {
+            scoreText.innerText = `You scored ${score} out of ${quizData.length}!`;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Function to reset the quiz
+        function redoQuiz() {
+            score = 0;
+            questionsAnswered = 0;
+            resultsContainer.classList.add('hidden');
+            
+            // Re-build the quiz to get a new random order
+            buildQuiz();
+
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Event listener for the redo button
+        redoBtn.addEventListener('click', redoQuiz);
+
+        // Initialize the quiz when the page loads
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+    </script>
+</body>
+</html>
