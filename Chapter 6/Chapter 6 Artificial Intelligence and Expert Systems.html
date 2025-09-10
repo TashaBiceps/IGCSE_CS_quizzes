@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Automated Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-option {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .correct {
+            background-color: #d1fae5 !important; /* Tailwind green-100 */
+            border-color: #10b981 !important; /* Tailwind green-500 */
+            color: #047857; /* Tailwind green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2 !important; /* Tailwind red-100 */
+            border-color: #ef4444 !important; /* Tailwind red-500 */
+            color: #b91c1c; /* Tailwind red-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Chapter 6: AI and Expert systems</h1>
+            <p class="text-gray-500 mt-2">Test your knowledge on AI and expert systems.</p>
+        </header>
+
+        <div id="quiz-container" class="space-y-8">
+            </div>
+
+        <div id="results-container" class="text-center mt-10 hidden">
+            <h2 id="score-text" class="text-2xl font-bold mb-4"></h2>
+            <button id="redo-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Redo Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+    {
+        "question": "[DEFINITION] What is the primary goal of Artificial Intelligence (AI)?",
+        "options": [
+            "To create computer systems that can perform tasks that typically require human intelligence.",
+            "To design faster and more efficient computer hardware.",
+            "To replace all human jobs with robots.",
+            "To store large amounts of data in the cloud."
+        ],
+        "answer": "To create computer systems that can perform tasks that typically require human intelligence."
+    },
+    {
+        "question": "[DEFINITION] Which component of an expert system contains the facts and rules about a specific knowledge domain?",
+        "options": [
+            "User Interface",
+            "Inference Engine",
+            "Knowledge Base",
+            "Explanation System"
+        ],
+        "answer": "Knowledge Base"
+    },
+    {
+        "question": "[DEFINITION] What is machine learning?",
+        "options": [
+            "A type of computer memory that learns from the user.",
+            "A field of AI that gives computers the ability to learn from data without being explicitly programmed.",
+            "The process of a human learning how to operate a machine.",
+            "A hardware component that speeds up a computer's learning ability."
+        ],
+        "answer": "A field of AI that gives computers the ability to learn from data without being explicitly programmed."
+    },
+    {
+        "question": "A doctor uses a computer program to help diagnose a rare disease. The program asks questions and, based on the answers, suggests a diagnosis. This program is an example of:",
+        "options": [
+            "A word processor",
+            "An expert system",
+            "A device driver",
+            "An operating system"
+        ],
+        "answer": "An expert system"
+    },
+    {
+        "question": "Which component of an expert system is responsible for reasoning and making logical deductions from the knowledge base to reach a conclusion?",
+        "options": [
+            "The Knowledge Base",
+            "The User Interface",
+            "The Inference Engine",
+            "The Rules Editor"
+        ],
+        "answer": "The Inference Engine"
+    },
+    {
+        "question": "An email service automatically filters incoming messages and places suspected junk mail into a 'spam' folder. This feature most likely uses which AI technology?",
+        "options": [
+            "An expert system",
+            "Machine learning",
+            "A robotic arm",
+            "A simple search algorithm"
+        ],
+        "answer": "Machine learning"
+    },
+    {
+        "question": "What is the role of the 'user interface' in an expert system?",
+        "options": [
+            "To process the rules and facts.",
+            "To store the expert knowledge.",
+            "To allow a non-expert user to query the system and receive answers.",
+            "To explain the reasoning behind the system's conclusions."
+        ],
+        "answer": "To allow a non-expert user to query the system and receive answers."
+    },
+    {
+        "question": "A machine learning model is trained by showing it thousands of pictures of cats, each labelled 'cat'. After training, it can identify cats in new, unlabelled pictures. What is this process called?",
+        "options": [
+            "Supervised learning",
+            "Unsupervised learning",
+            "Direct programming",
+            "An expert system query"
+        ],
+        "answer": "Supervised learning"
+    },
+    {
+        "question": "What is a key advantage of using an expert system?",
+        "options": [
+            "It can be used to solve any type of problem.",
+            "It provides access to expert-level knowledge 24/7 and preserves it.",
+            "It has common sense and can understand human emotions.",
+            "It is always cheaper to build than to hire a human expert."
+        ],
+        "answer": "It provides access to expert-level knowledge 24/7 and preserves it."
+    },
+    {
+        "question": "A streaming service recommends new movies to a user based on their viewing history and the viewing history of similar users. This recommendation engine is a common application of:",
+        "options": [
+            "Robotics",
+            "Expert systems",
+            "Machine learning",
+            "Automated control systems"
+        ],
+        "answer": "Machine learning"
+    },
+    {
+        "question": "What is a significant limitation of an expert system?",
+        "options": [
+            "It cannot explain its reasoning.",
+            "Its knowledge is limited to the specific, narrow domain it was programmed for.",
+            "It processes information very slowly.",
+            "It requires an internet connection to function."
+        ],
+        "answer": "Its knowledge is limited to the specific, narrow domain it was programmed for."
+    },
+    {
+        "question": "A scientist uses an AI to find hidden patterns and group similar stars together from a massive dataset of astronomical observations, without any pre-existing labels. This is an example of:",
+        "options": [
+            "An expert system",
+            "Supervised learning",
+            "Unsupervised learning",
+            "A simple database query"
+        ],
+        "answer": "Unsupervised learning"
+    },
+    {
+        "question": "How is the knowledge base of an expert system typically created?",
+        "options": [
+            "The system learns automatically by browsing the internet.",
+            "By interviewing human experts in a specific field and programming their knowledge as facts and rules.",
+            "It is randomly generated by the inference engine.",
+            "Users input the knowledge as they use the system."
+        ],
+        "answer": "By interviewing human experts in a specific field and programming their knowledge as facts and rules."
+    },
+    {
+        "question": "Which of the following tasks is a classic example of an AI application?",
+        "options": [
+            "Calculating the sum of two numbers.",
+            "Storing a customer's address in a database.",
+            "Recognising human speech and converting it to text.",
+            "Printing a document."
+        ],
+        "answer": "Recognising human speech and converting it to text."
+    },
+    {
+        "question": "The 'explanation system' in an expert system is important because it...",
+        "options": [
+            "allows the system to learn new rules.",
+            "provides a faster user interface.",
+            "helps build trust by showing the user the reasoning behind the conclusion.",
+            "stores all the facts about the domain."
+        ],
+        "answer": "helps build trust by showing the user the reasoning behind the conclusion."
+    },
+    {
+        "question": "Self-driving cars use a form of AI to identify pedestrians, traffic lights, and other vehicles from sensor data. This capability is known as:",
+        "options": [
+            "Machine translation",
+            "Expert system diagnosis",
+            "Computer vision",
+            "Data mining"
+        ],
+        "answer": "Computer vision"
+    },
+    {
+        "question": "What is a potential ethical issue associated with using AI for making decisions like loan applications or criminal sentencing?",
+        "options": [
+            "The AI may process the applications too quickly.",
+            "The AI may contain biases learned from the data it was trained on, leading to unfair outcomes.",
+            "The AI requires too much electricity to run.",
+            "The AI cannot store enough applications."
+        ],
+        "answer": "The AI may contain biases learned from the data it was trained on, leading to unfair outcomes."
+    },
+    {
+        "question": "An oil exploration company uses a system that analyses geological data to suggest the best locations for drilling. This system, which encapsulates the knowledge of many geologists, is a type of:",
+        "options": [
+            "Machine learning model",
+            "Expert system",
+            "Social media platform",
+            "Robotic controller"
+        ],
+        "answer": "Expert system"
+    },
+    {
+        "question": "For a machine learning model to improve its accuracy, what does it typically need?",
+        "options": [
+            "A faster processor.",
+            "More data to learn from.",
+            "A better monitor.",
+            "A simpler algorithm."
+        ],
+        "answer": "More data to learn from."
+    },
+    {
+        "question": "What is the fundamental difference between machine learning and traditional programming?",
+        "options": [
+            "Machine learning is written in a different programming language.",
+            "In traditional programming, humans write explicit rules; in machine learning, the system learns the rules from data.",
+            "Traditional programming cannot handle mathematical calculations.",
+            "Machine learning is only used for games, while traditional programming is for business."
+        ],
+        "answer": "In traditional programming, humans write explicit rules; in machine learning, the system learns the rules from data."
+    }
+];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreText = document.getElementById('score-text');
+        const redoBtn = document.getElementById('redo-btn');
+
+        let score = 0;
+        let questionsAnswered = 0;
+
+        /**
+         * NEW: Function to shuffle an array in place using the Fisher-Yates algorithm.
+         * @param {Array} array The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // MODIFIED: Function to build and display the quiz
+        function buildQuiz() {
+            quizContainer.innerHTML = '';
+            
+            // Create a shuffled copy of the questions to not alter the original array
+            const shuffledQuestions = shuffleArray([...quizData]);
+
+            shuffledQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-block');
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('text-lg', 'font-semibold', 'mb-4');
+                questionTitle.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3');
+                
+                // Create a shuffled copy of the options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('quiz-option', 'w-full', 'p-3', 'text-left', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-100', 'hover:border-blue-500', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+                    button.innerText = option;
+                    // Pass the whole question object and the options container for context
+                    button.onclick = () => selectAnswer(button, option, currentQuestion, optionsDiv);
+                    optionsDiv.appendChild(button);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // MODIFIED: Function to handle answer selection
+        function selectAnswer(selectedButton, selectedOption, currentQuestion, optionsContainer) {
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const correctAnswer = currentQuestion.answer;
+
+            // Disable all buttons for this question to prevent changing the answer
+            options.forEach(button => {
+                button.disabled = true;
+                if (button.innerText === correctAnswer) {
+                    button.classList.add('correct');
+                }
+            });
+
+            if (selectedOption !== correctAnswer) {
+                selectedButton.classList.add('incorrect');
+            } else {
+                score++;
+            }
+
+            questionsAnswered++;
+
+            // Check if all questions have been answered
+            if (questionsAnswered === quizData.length) {
+                showResults();
+            }
+        }
+
+        // Function to display the final score
+        function showResults() {
+            scoreText.innerText = `You scored ${score} out of ${quizData.length}!`;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Function to reset the quiz
+        function redoQuiz() {
+            score = 0;
+            questionsAnswered = 0;
+            resultsContainer.classList.add('hidden');
+            
+            // Re-build the quiz to get a new random order
+            buildQuiz();
+
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Event listener for the redo button
+        redoBtn.addEventListener('click', redoQuiz);
+
+        // Initialize the quiz when the page loads
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+    </script>
+</body>
+</html>

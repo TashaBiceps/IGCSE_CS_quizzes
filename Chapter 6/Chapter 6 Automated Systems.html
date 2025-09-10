@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Automated Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-option {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .correct {
+            background-color: #d1fae5 !important; /* Tailwind green-100 */
+            border-color: #10b981 !important; /* Tailwind green-500 */
+            color: #047857; /* Tailwind green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2 !important; /* Tailwind red-100 */
+            border-color: #ef4444 !important; /* Tailwind red-500 */
+            color: #b91c1c; /* Tailwind red-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Chapter 6: Automated Systems</h1>
+            <p class="text-gray-500 mt-2">Test your knowledge on Automated Systems.</p>
+        </header>
+
+        <div id="quiz-container" class="space-y-8">
+            </div>
+
+        <div id="results-container" class="text-center mt-10 hidden">
+            <h2 id="score-text" class="text-2xl font-bold mb-4"></h2>
+            <button id="redo-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Redo Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+    {
+        "question": "[DEFINITION] What is the role of a sensor in an automated system?",
+        "options": [
+            "To perform a physical action or movement.",
+            "To process data and make decisions.",
+            "To collect data about the physical environment.",
+            "To convert digital signals to analogue signals."
+        ],
+        "answer": "To collect data about the physical environment."
+    },
+    {
+        "question": "[DEFINITION] In the context of an automated system, what is a microprocessor?",
+        "options": [
+            "A device that measures physical quantities like temperature.",
+            "A motor or switch that carries out an action.",
+            "A small CPU on a single integrated circuit that processes input and makes decisions.",
+            "A device that converts digital data into an analogue signal."
+        ],
+        "answer": "A small CPU on a single integrated circuit that processes input and makes decisions."
+    },
+    {
+        "question": "[DEFINITION] What is the function of an actuator in a control system?",
+        "options": [
+            "To convert analogue sensor data into a digital format.",
+            "To measure changes in light levels.",
+            "To carry out a physical action based on a signal from the microprocessor.",
+            "To store the pre-set values for the system."
+        ],
+        "answer": "To carry out a physical action based on a signal from the microprocessor."
+    },
+    {
+        "question": "Data collected by a sensor is analogue. Why must this data be converted before a microprocessor can use it?",
+        "options": [
+            "Because microprocessors can only process digital data.",
+            "Because analogue data is often inaccurate.",
+            "To amplify the signal so it is stronger.",
+            "To encrypt the data for security."
+        ],
+        "answer": "Because microprocessors can only process digital data."
+    },
+    {
+        "question": "Which component is responsible for converting the analogue signal from a sensor into a format the microprocessor can understand?",
+        "options": [
+            "Digital-to-Analogue Converter (DAC)",
+            "Actuator",
+            "Analogue-to-Digital Converter (ADC)",
+            "Central Processing Unit (CPU)"
+        ],
+        "answer": "Analogue-to-Digital Converter (ADC)"
+    },
+    {
+        "question": "A robotic arm in a factory is tasked with picking up boxes. The motor that moves the arm is an example of what?",
+        "options": [
+            "A sensor",
+            "An actuator",
+            "A microprocessor",
+            "An ADC"
+        ],
+        "answer": "An actuator"
+    },
+    {
+        "question": "An automated street lighting system is designed to switch on when it gets dark. What type of sensor would be required?",
+        "options": [
+            "Temperature sensor",
+            "Pressure sensor",
+            "Light sensor",
+            "Sound sensor"
+        ],
+        "answer": "Light sensor"
+    },
+    {
+        "question": "Which of the following is a benefit of using automated systems in manufacturing over human workers?",
+        "options": [
+            "They have more creativity to solve unexpected problems.",
+            "They can work 24/7 with consistent precision.",
+            "The initial setup cost is very low.",
+            "They can perform a wider variety of different tasks."
+        ],
+        "answer": "They can work 24/7 with consistent precision."
+    },
+    {
+        "question": "A hotel's automated heating system is set to maintain a room temperature of 20°C. If the temperature drops to 18°C, what happens?",
+        "options": [
+            "The sensor data is ignored by the microprocessor.",
+            "The microprocessor compares the sensor data to the pre-set value and turns the heater on.",
+            "The system shuts down to save energy.",
+            "The actuator sends a signal to the sensor to recalibrate."
+        ],
+        "answer": "The microprocessor compares the sensor data to the pre-set value and turns the heater on."
+    },
+    {
+        "question": "What is a significant disadvantage of automating a factory production line?",
+        "options": [
+            "The quality of the product becomes inconsistent.",
+            "The speed of production decreases significantly.",
+            "There is a high initial investment cost for machinery and setup.",
+            "The factory can no longer operate at night."
+        ],
+        "answer": "There is a high initial investment cost for machinery and setup."
+    },
+    {
+        "question": "An automated car park barrier uses a pressure sensor under the road. What is the likely purpose of this sensor?",
+        "options": [
+            "To measure the temperature of the car's engine.",
+            "To detect if a car is present and waiting at the barrier.",
+            "To check the air quality around the car park.",
+            "To read the car's number plate."
+        ],
+        "answer": "To detect if a car is present and waiting at the barrier."
+    },
+    {
+        "question": "In a computer-controlled greenhouse, a moisture sensor detects that the soil is too dry. What would be the most appropriate output action?",
+        "options": [
+            "Turn on a fan.",
+            "Open a window.",
+            "Activate a water sprinkler system.",
+            "Turn on a light."
+        ],
+        "answer": "Activate a water sprinkler system."
+    },
+    {
+        "question": "Which component is needed to make an actuator, such as a motor, work correctly after the microprocessor has made a decision?",
+        "options": [
+            "An Analogue-to-Digital Converter (ADC)",
+            "A sensor",
+            "A Digital-to-Analogue Converter (DAC)",
+            "A light-emitting diode (LED)"
+        ],
+        "answer": "A Digital-to-Analogue Converter (DAC)"
+    },
+    {
+        "question": "What is the role of feedback in a control system?",
+        "options": [
+            "To shut the system down after a task is complete.",
+            "To allow the system to monitor its own output and make adjustments.",
+            "To send all sensor data to the cloud for storage.",
+            "To manually override the system's decisions."
+        ],
+        "answer": "To allow the system to monitor its own output and make adjustments."
+    },
+    {
+        "question": "A self-driving car uses sensors to detect its distance from the car in front. If it gets too close, the system automatically applies the brakes. The braking mechanism is an example of:",
+        "options": [
+            "A sensor",
+            "An actuator",
+            "An ADC",
+            "A microprocessor"
+        ],
+        "answer": "An actuator"
+    },
+    {
+        "question": "What is a potential negative societal impact of increased automation in the workplace?",
+        "options": [
+            "An increase in the price of consumer goods.",
+            "A decrease in manufacturing efficiency.",
+            "An increase in dangerous jobs for humans.",
+            "A loss of jobs for human workers in certain industries."
+        ],
+        "answer": "A loss of jobs for human workers in certain industries."
+    },
+    {
+        "question": "[PROCESS] An automated climate control system detects that a room is too hot. Which of the following describes the correct sequence of events?",
+        "options": [
+            "Microprocessor -> Actuator -> Sensor -> Decision",
+            "Sensor -> Microprocessor -> ADC -> Actuator",
+            "Sensor -> ADC -> Microprocessor -> Actuator (e.g., a fan)",
+            "Actuator -> DAC -> Microprocessor -> Sensor"
+        ],
+        "answer": "Sensor -> ADC -> Microprocessor -> Actuator (e.g., a fan)"
+    },
+    {
+        "question": "[PROCESS] A temperature sensor in an oven sends an analogue voltage reading to the control system. What is the immediate next step in the control process?",
+        "options": [
+            "The microprocessor compares the reading to the pre-set temperature.",
+            "The heating element (actuator) is turned off.",
+            "The reading is converted to a digital value by an ADC.",
+            "A warning light is displayed for the user."
+        ],
+        "answer": "The reading is converted to a digital value by an ADC."
+    },
+    {
+        "question": "[PROCESS] In an automated system, after the microprocessor compares the incoming digital data to a pre-set value and decides an action is needed, what must happen before a motor can be turned on?",
+        "options": [
+            "The sensor needs to take another reading.",
+            "The microprocessor must send a digital signal which is then converted by a DAC.",
+            "The system must be manually reset by a human.",
+            "The digital data is converted back to analogue by an ADC."
+        ],
+        "answer": "The microprocessor must send a digital signal which is then converted by a DAC."
+    },
+    {
+        "question": "Which of the following scenarios is NOT a suitable application for an automated system?",
+        "options": [
+            "Monitoring a patient's vital signs in a hospital.",
+            "Controlling the temperature in a chemical process.",
+            "A robot performing a repetitive welding task on a car assembly line.",
+            "A system for counselling a person with complex emotional problems."
+        ],
+        "answer": "A system for counselling a person with complex emotional problems."
+    }
+];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreText = document.getElementById('score-text');
+        const redoBtn = document.getElementById('redo-btn');
+
+        let score = 0;
+        let questionsAnswered = 0;
+
+        /**
+         * NEW: Function to shuffle an array in place using the Fisher-Yates algorithm.
+         * @param {Array} array The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // MODIFIED: Function to build and display the quiz
+        function buildQuiz() {
+            quizContainer.innerHTML = '';
+            
+            // Create a shuffled copy of the questions to not alter the original array
+            const shuffledQuestions = shuffleArray([...quizData]);
+
+            shuffledQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-block');
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('text-lg', 'font-semibold', 'mb-4');
+                questionTitle.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3');
+                
+                // Create a shuffled copy of the options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('quiz-option', 'w-full', 'p-3', 'text-left', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-100', 'hover:border-blue-500', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+                    button.innerText = option;
+                    // Pass the whole question object and the options container for context
+                    button.onclick = () => selectAnswer(button, option, currentQuestion, optionsDiv);
+                    optionsDiv.appendChild(button);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // MODIFIED: Function to handle answer selection
+        function selectAnswer(selectedButton, selectedOption, currentQuestion, optionsContainer) {
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const correctAnswer = currentQuestion.answer;
+
+            // Disable all buttons for this question to prevent changing the answer
+            options.forEach(button => {
+                button.disabled = true;
+                if (button.innerText === correctAnswer) {
+                    button.classList.add('correct');
+                }
+            });
+
+            if (selectedOption !== correctAnswer) {
+                selectedButton.classList.add('incorrect');
+            } else {
+                score++;
+            }
+
+            questionsAnswered++;
+
+            // Check if all questions have been answered
+            if (questionsAnswered === quizData.length) {
+                showResults();
+            }
+        }
+
+        // Function to display the final score
+        function showResults() {
+            scoreText.innerText = `You scored ${score} out of ${quizData.length}!`;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Function to reset the quiz
+        function redoQuiz() {
+            score = 0;
+            questionsAnswered = 0;
+            resultsContainer.classList.add('hidden');
+            
+            // Re-build the quiz to get a new random order
+            buildQuiz();
+
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Event listener for the redo button
+        redoBtn.addEventListener('click', redoQuiz);
+
+        // Initialize the quiz when the page loads
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+    </script>
+</body>
+</html>
