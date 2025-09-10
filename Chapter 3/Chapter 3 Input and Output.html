@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Hardware</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-option {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .correct {
+            background-color: #d1fae5 !important; /* Tailwind green-100 */
+            border-color: #10b981 !important; /* Tailwind green-500 */
+            color: #047857; /* Tailwind green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2 !important; /* Tailwind red-100 */
+            border-color: #ef4444 !important; /* Tailwind red-500 */
+            color: #b91c1c; /* Tailwind red-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Chapter 3: Hardware (Input and Output)</h1>
+            <p class="text-gray-500 mt-2">Test your knowledge of the Input and Output.</p>
+        </header>
+
+        <div id="quiz-container" class="space-y-8">
+            </div>
+
+        <div id="results-container" class="text-center mt-10 hidden">
+            <h2 id="score-text" class="text-2xl font-bold mb-4"></h2>
+            <button id="redo-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Redo Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+    {
+        "question": "Which input device is best suited for reading the account number from the bottom of a cheque?",
+        "options": [
+            "Magnetic Ink Character Reader (MICR)",
+            "Optical Mark Reader (OMR)",
+            "Barcode Scanner",
+            "QR Code Reader"
+        ],
+        "answer": "Magnetic Ink Character Reader (MICR)"
+    },
+    {
+        "question": "A student is answering a multiple-choice examination on a paper form by shading in boxes. Which device would be used to automatically mark these papers?",
+        "options": [
+            "A flatbed scanner",
+            "An Optical Mark Reader (OMR)",
+            "A webcam",
+            "A keyboard"
+        ],
+        "answer": "An Optical Mark Reader (OMR)"
+    },
+    {
+        "question": "Which of these is an example of an output device?",
+        "options": [
+            "Microphone",
+            "Webcam",
+            "Actuator",
+            "Light sensor"
+        ],
+        "answer": "Actuator"
+    },
+    {
+        "question": "A supermarket checkout operator scans a product's packaging to retrieve its price. What input device are they using?",
+        "options": [
+            "QR Code Reader",
+            "Magnetic Stripe Reader",
+            "Barcode Scanner",
+            "Chip and PIN Reader"
+        ],
+        "answer": "Barcode Scanner"
+    },
+    {
+        "question": "What is the primary function of a sensor in a computer-controlled system?",
+        "options": [
+            "To output sound to the user.",
+            "To process data using a microprocessor.",
+            "To convert a physical property into an electrical signal.",
+            "To display images on a screen."
+        ],
+        "answer": "To convert a physical property into an electrical signal."
+    },
+    {
+        "question": "A scientist needs to produce a large, high-quality, physical drawing of a building's blueprint. Which output device is most suitable for this task?",
+        "options": [
+            "Inkjet printer",
+            "Laser printer",
+            "3D printer",
+            "Plotter"
+        ],
+        "answer": "Plotter"
+    },
+    {
+        "question": "Which technology is used by a touch screen that relies on the electrical properties of the human body to detect input?",
+        "options": [
+            "Resistive",
+            "Infrared",
+            "Capacitive",
+            "Surface Acoustic Wave"
+        ],
+        "answer": "Capacitive"
+    },
+    {
+        "question": "What type of printer works by heating special paper to produce an image, often used for printing receipts?",
+        "options": [
+            "Laser printer",
+            "Dot matrix printer",
+            "Thermal printer",
+            "Inkjet printer"
+        ],
+        "answer": "Thermal printer"
+    },
+    {
+        "question": "An actuator is a type of motor used in control systems. What is its role?",
+        "options": [
+            "To measure temperature.",
+            "To convert digital signals into physical movement.",
+            "To capture digital images.",
+            "To input text into a system."
+        ],
+        "answer": "To convert digital signals into physical movement."
+    },
+    {
+        "question": "A photographer wants to print high-quality colour photographs. Which type of printer would produce the best results?",
+        "options": [
+            "Dot matrix printer",
+            "Inkjet printer",
+            "Thermal printer",
+            "Plotter"
+        ],
+        "answer": "Inkjet printer"
+    },
+    {
+        "question": "Which of these devices creates a solid, physical object from a digital design?",
+        "options": [
+            "Laser printer",
+            "Plotter",
+            "3D printer",
+            "Inkjet printer"
+        ],
+        "answer": "3D printer"
+    },
+    {
+        "question": "A smartphone automatically rotates its screen when turned sideways. Which sensor is responsible for detecting this orientation change?",
+        "options": [
+            "Pressure sensor",
+            "Light sensor",
+            "Accelerometer",
+            "Temperature sensor"
+        ],
+        "answer": "Accelerometer"
+    },
+    {
+        "question": "What is a key difference between a laser printer and an inkjet printer?",
+        "options": [
+            "Laser printers use liquid ink, while inkjet printers use powdered toner.",
+            "Laser printers are impact printers, while inkjet printers are non-impact.",
+            "Laser printers use powdered toner and heat, while inkjet printers spray droplets of liquid ink.",
+            "Laser printers can only print in black and white, while inkjet printers can print in colour."
+        ],
+        "answer": "Laser printers use powdered toner and heat, while inkjet printers spray droplets of liquid ink."
+    },
+    {
+        "question": "Which input device would be used to convert a physical, printed document into a digital file on a computer?",
+        "options": [
+            "Printer",
+            "Scanner",
+            "Monitor",
+            "Plotter"
+        ],
+        "answer": "Scanner"
+    },
+    {
+        "question": "A burglar alarm system needs to detect if an intruder is moving around a room. Which sensor would be most appropriate for this task?",
+        "options": [
+            "Humidity sensor",
+            "Infrared (IR) / Motion sensor",
+            "pH sensor",
+            "Pressure sensor"
+        ],
+        "answer": "Infrared (IR) / Motion sensor"
+    },
+    {
+        "question": "Which output device is best for a person with a visual impairment to read text from a computer screen?",
+        "options": [
+            "Speakers",
+            "A plotter",
+            "A Braille terminal",
+            "A high-resolution monitor"
+        ],
+        "answer": "A Braille terminal"
+    },
+    {
+        "question": "What does a QR (Quick Response) code typically store?",
+        "options": [
+            "Only a 12-digit number for product identification.",
+            "A web address (URL), text information, or contact details.",
+            "High-resolution images.",
+            "Executable program files."
+        ],
+        "answer": "A web address (URL), text information, or contact details."
+    },
+    {
+        "question": "Which of these is a direct data entry (DDE) device?",
+        "options": [
+            "Mouse",
+            "Keyboard",
+            "Chip and PIN reader",
+            "Microphone"
+        ],
+        "answer": "Chip and PIN reader"
+    },
+    {
+        "question": "What technology does an inkjet printer use to create an image on paper?",
+        "options": [
+            "It uses a laser beam to fuse toner onto the paper.",
+            "It strikes an inked ribbon against the paper.",
+            "It sprays microscopic droplets of ink from a print head.",
+            "It uses heated pins to burn dots onto special paper."
+        ],
+        "answer": "It sprays microscopic droplets of ink from a print head."
+    },
+    {
+        "question": "Which device is both an input and an output device?",
+        "options": [
+            "A keyboard",
+            "A printer",
+            "A touch screen",
+            "A mouse"
+        ],
+        "answer": "A touch screen"
+    },
+    {
+        "question": "[SITUATIONAL] An automated greenhouse needs to maintain a constant, warm environment for plants. Which two sensors would be essential for this system?",
+        "options": [
+            "Light and sound sensors",
+            "Temperature and humidity sensors",
+            "Pressure and motion sensors",
+            "pH and sound sensors"
+        ],
+        "answer": "Temperature and humidity sensors"
+    },
+    {
+        "question": "[SITUATIONAL] A pilot is using a flight simulator. Which combination of input/output devices would provide the most realistic experience?",
+        "options": [
+            "Keyboard, mouse, and a standard monitor.",
+            "Microphone, speakers, and a printer.",
+            "Joystick, pedals, and large-screen displays.",
+            "Touch screen and a dot matrix printer."
+        ],
+        "answer": "Joystick, pedals, and large-screen displays."
+    },
+    {
+        "question": "[SITUATIONAL] A hospital needs to print multi-part patient forms where the text must pass through several carbon copies. Which type of printer is required?",
+        "options": [
+            "Laser printer",
+            "Inkjet printer",
+            "Dot matrix printer",
+            "3D printer"
+        ],
+        "answer": "Dot matrix printer"
+    },
+    {
+        "question": "[SITUATIONAL] A modern car is designed to automatically turn on its headlights when it gets dark. What sensor enables this feature?",
+        "options": [
+            "A moisture sensor",
+            "A light sensor",
+            "A proximity sensor",
+            "A temperature sensor"
+        ],
+        "answer": "A light sensor"
+    },
+    {
+        "question": "[SITUATIONAL] A new office requires a printer that can handle a high volume of black-and-white text documents quickly and at a low cost per page. What is the best choice?",
+        "options": [
+            "A colour inkjet printer",
+            "A monochrome laser printer",
+            "A 3D printer",
+            "A plotter"
+        ],
+        "answer": "A monochrome laser printer"
+    }
+];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreText = document.getElementById('score-text');
+        const redoBtn = document.getElementById('redo-btn');
+
+        let score = 0;
+        let questionsAnswered = 0;
+
+        /**
+         * NEW: Function to shuffle an array in place using the Fisher-Yates algorithm.
+         * @param {Array} array The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // MODIFIED: Function to build and display the quiz
+        function buildQuiz() {
+            quizContainer.innerHTML = '';
+            
+            // Create a shuffled copy of the questions to not alter the original array
+            const shuffledQuestions = shuffleArray([...quizData]);
+
+            shuffledQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-block');
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('text-lg', 'font-semibold', 'mb-4');
+                questionTitle.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3');
+                
+                // Create a shuffled copy of the options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('quiz-option', 'w-full', 'p-3', 'text-left', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-100', 'hover:border-blue-500', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+                    button.innerText = option;
+                    // Pass the whole question object and the options container for context
+                    button.onclick = () => selectAnswer(button, option, currentQuestion, optionsDiv);
+                    optionsDiv.appendChild(button);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // MODIFIED: Function to handle answer selection
+        function selectAnswer(selectedButton, selectedOption, currentQuestion, optionsContainer) {
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const correctAnswer = currentQuestion.answer;
+
+            // Disable all buttons for this question to prevent changing the answer
+            options.forEach(button => {
+                button.disabled = true;
+                if (button.innerText === correctAnswer) {
+                    button.classList.add('correct');
+                }
+            });
+
+            if (selectedOption !== correctAnswer) {
+                selectedButton.classList.add('incorrect');
+            } else {
+                score++;
+            }
+
+            questionsAnswered++;
+
+            // Check if all questions have been answered
+            if (questionsAnswered === quizData.length) {
+                showResults();
+            }
+        }
+
+        // Function to display the final score
+        function showResults() {
+            scoreText.innerText = `You scored ${score} out of ${quizData.length}!`;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Function to reset the quiz
+        function redoQuiz() {
+            score = 0;
+            questionsAnswered = 0;
+            resultsContainer.classList.add('hidden');
+            
+            // Re-build the quiz to get a new random order
+            buildQuiz();
+
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Event listener for the redo button
+        redoBtn.addEventListener('click', redoQuiz);
+
+        // Initialize the quiz when the page loads
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+    </script>
+</body>
+</html>

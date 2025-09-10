@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Hardware</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-option {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .correct {
+            background-color: #d1fae5 !important; /* Tailwind green-100 */
+            border-color: #10b981 !important; /* Tailwind green-500 */
+            color: #047857; /* Tailwind green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2 !important; /* Tailwind red-100 */
+            border-color: #ef4444 !important; /* Tailwind red-500 */
+            color: #b91c1c; /* Tailwind red-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Chapter 3: Hardware (Network Hardware)</h1>
+            <p class="text-gray-500 mt-2">Test your knowledge of Network Hardware.</p>
+        </header>
+
+        <div id="quiz-container" class="space-y-8">
+            </div>
+
+        <div id="results-container" class="text-center mt-10 hidden">
+            <h2 id="score-text" class="text-2xl font-bold mb-4"></h2>
+            <button id="redo-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Redo Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+    {
+        "question": "[DEFINITION] What is the primary function of a Network Interface Card (NIC)?",
+        "options": [
+            "To connect multiple networks together and forward packets between them.",
+            "To allow a computer to connect to a network by providing a physical connection point.",
+            "To filter network traffic based on MAC addresses.",
+            "To store the IP address of a website."
+        ],
+        "answer": "To allow a computer to connect to a network by providing a physical connection point."
+    },
+    {
+        "question": "[DEFINITION] Which hardware device receives a data packet from one port and broadcasts it to every other port on the device?",
+        "options": [
+            "A router",
+            "A switch",
+            "A hub",
+            "A firewall"
+        ],
+        "answer": "A hub"
+    },
+    {
+        "question": "[DEFINITION] What is the main role of a router in a network?",
+        "options": [
+            "To connect devices within the same Local Area Network (LAN).",
+            "To translate domain names into IP addresses.",
+            "To transmit data packets between different networks, like a LAN and the internet.",
+            "To provide a wireless connection point for devices."
+        ],
+        "answer": "To transmit data packets between different networks, like a LAN and the internet."
+    },
+    {
+        "question": "[DEFINITION] Which device intelligently forwards data packets only to the intended recipient device by using its MAC address?",
+        "options": [
+            "A hub",
+            "A switch",
+            "A repeater",
+"A modem"
+        ],
+        "answer": "A switch"
+    },
+    {
+        "question": "[DEFINITION] What is the purpose of a Wireless Access Point (WAP)?",
+        "options": [
+            "To connect different network types, such as a LAN and a WAN.",
+            "To create a wireless local area network (WLAN) by allowing devices to connect to the network without cables.",
+            "To store a table of MAC addresses and corresponding ports.",
+            "To modulate and demodulate signals for telephone line transmission."
+        ],
+        "answer": "To create a wireless local area network (WLAN) by allowing devices to connect to the network without cables."
+    },
+    {
+        "question": "A school network consists of 50 computers in one classroom. All computers need to be connected to each other and to a single server. Which device is most suitable for connecting these computers within the same network, ensuring efficient data transmission?",
+        "options": [
+            "A hub",
+            "A router",
+            "A switch",
+            "A modem"
+        ],
+        "answer": "A switch"
+    },
+    {
+        "question": "An office needs to connect its local area network (LAN) to the internet. Which device is essential for this connection?",
+        "options": [
+            "A hub",
+            "A switch",
+            "A Network Interface Card (NIC)",
+            "A router"
+        ],
+        "answer": "A router"
+    },
+    {
+        "question": "Why is a switch considered more efficient than a hub for managing traffic on a busy network?",
+        "options": [
+            "A switch is always wireless, which is faster.",
+            "A switch broadcasts data to all devices, ensuring everyone receives it.",
+            "A switch sends data only to the specific device it is intended for, reducing unnecessary network traffic.",
+            "A switch uses less electricity than a hub."
+        ],
+        "answer": "A switch sends data only to the specific device it is intended for, reducing unnecessary network traffic."
+    },
+    {
+        "question": "What type of physical transmission medium is commonly used with a Network Interface Card's Ethernet port?",
+        "options": [
+            "Coaxial cable",
+            "Fibre optic cable",
+            "Twisted pair (Ethernet) cable",
+            "Satellite signals"
+        ],
+        "answer": "Twisted pair (Ethernet) cable"
+    },
+    {
+        "question": "A user finds that the Wi-Fi signal is weak at the far end of their house. Which device could be used to boost the signal and extend the range of the wireless network?",
+        "options": [
+            "A router",
+            "A hub",
+            "A wireless repeater/extender",
+            "A switch"
+        ],
+        "answer": "A wireless repeater/extender"
+    },
+    {
+        "question": "Every Network Interface Card (NIC) has a unique, hard-coded address. What is this address called?",
+        "options": [
+            "IP Address",
+            "MAC (Media Access Control) Address",
+            "URL (Uniform Resource Locator)",
+            "Port Address"
+        ],
+        "answer": "MAC (Media Access Control) Address"
+    },
+    {
+        "question": "In a home setup, the device provided by an Internet Service Provider (ISP) often combines the functions of a router, a switch, and a wireless access point. What is this device commonly called?",
+        "options": [
+            "A hub",
+            "A home router or gateway",
+            "A NIC",
+            "A repeater"
+        ],
+        "answer": "A home router or gateway"
+    },
+    {
+        "question": "A large company wants the fastest possible and most secure connection for its backbone network between two buildings. Which transmission medium would be the best choice?",
+        "options": [
+            "Twisted pair cable",
+            "Wi-Fi",
+            "Fibre optic cable",
+            "Coaxial cable"
+        ],
+        "answer": "Fibre optic cable"
+    },
+    {
+        "question": "When a switch receives a data packet, what information in the packet's header does it read to determine where to send it?",
+        "options": [
+            "The destination IP address",
+            "The source IP address",
+            "The destination MAC address",
+            "The port number"
+        ],
+        "answer": "The destination MAC address"
+    },
+    {
+        "question": "A user wants to connect their desktop computer, which does not have built-in Wi-Fi, to their wireless home network. What hardware will they need to install or connect to the computer?",
+        "options": [
+            "A router",
+            "A wireless Network Interface Card (NIC) or USB Wi-Fi adapter",
+            "A hub",
+            "An Ethernet cable"
+        ],
+        "answer": "A wireless Network Interface Card (NIC) or USB Wi-Fi adapter"
+    }
+];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreText = document.getElementById('score-text');
+        const redoBtn = document.getElementById('redo-btn');
+
+        let score = 0;
+        let questionsAnswered = 0;
+
+        /**
+         * NEW: Function to shuffle an array in place using the Fisher-Yates algorithm.
+         * @param {Array} array The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // MODIFIED: Function to build and display the quiz
+        function buildQuiz() {
+            quizContainer.innerHTML = '';
+            
+            // Create a shuffled copy of the questions to not alter the original array
+            const shuffledQuestions = shuffleArray([...quizData]);
+
+            shuffledQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-block');
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('text-lg', 'font-semibold', 'mb-4');
+                questionTitle.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3');
+                
+                // Create a shuffled copy of the options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('quiz-option', 'w-full', 'p-3', 'text-left', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-100', 'hover:border-blue-500', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+                    button.innerText = option;
+                    // Pass the whole question object and the options container for context
+                    button.onclick = () => selectAnswer(button, option, currentQuestion, optionsDiv);
+                    optionsDiv.appendChild(button);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // MODIFIED: Function to handle answer selection
+        function selectAnswer(selectedButton, selectedOption, currentQuestion, optionsContainer) {
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const correctAnswer = currentQuestion.answer;
+
+            // Disable all buttons for this question to prevent changing the answer
+            options.forEach(button => {
+                button.disabled = true;
+                if (button.innerText === correctAnswer) {
+                    button.classList.add('correct');
+                }
+            });
+
+            if (selectedOption !== correctAnswer) {
+                selectedButton.classList.add('incorrect');
+            } else {
+                score++;
+            }
+
+            questionsAnswered++;
+
+            // Check if all questions have been answered
+            if (questionsAnswered === quizData.length) {
+                showResults();
+            }
+        }
+
+        // Function to display the final score
+        function showResults() {
+            scoreText.innerText = `You scored ${score} out of ${quizData.length}!`;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Function to reset the quiz
+        function redoQuiz() {
+            score = 0;
+            questionsAnswered = 0;
+            resultsContainer.classList.add('hidden');
+            
+            // Re-build the quiz to get a new random order
+            buildQuiz();
+
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Event listener for the redo button
+        redoBtn.addEventListener('click', redoQuiz);
+
+        // Initialize the quiz when the page loads
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+    </script>
+</body>
+</html>
