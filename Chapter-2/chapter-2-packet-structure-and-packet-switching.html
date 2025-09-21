@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packet Structure and Switching</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-option {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .correct {
+            background-color: #d1fae5 !important; /* Tailwind green-100 */
+            border-color: #10b981 !important; /* Tailwind green-500 */
+            color: #047857; /* Tailwind green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2 !important; /* Tailwind red-100 */
+            border-color: #ef4444 !important; /* Tailwind red-500 */
+            color: #b91c1c; /* Tailwind red-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Packet Structure and Packet Switching</h1>
+            <p class="text-gray-500 mt-2">Test your knowledge of the Chapter 2.</p>
+        </header>
+
+        <div id="quiz-container" class="space-y-8">
+            </div>
+
+        <div id="results-container" class="text-center mt-10 hidden">
+            <h2 id="score-text" class="text-2xl font-bold mb-4"></h2>
+            <button id="redo-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Redo Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+    {
+        "question": "[DEFINITION] What is a data packet?",
+        "options": [
+            "A single cable used to transmit data.",
+            "A small unit of data sent over a network.",
+            "A security protocol for wireless networks.",
+            "A hardware device that connects networks."
+        ],
+        "answer": "A small unit of data sent over a network."
+    },
+    {
+        "question": "[DEFINITION] What is packet switching?",
+        "options": [
+            "A method of physically switching network cables.",
+            "A method of grouping data into packets, which are then routed independently across a network.",
+            "A security feature that switches a user's IP address.",
+            "A technique for compressing data packets to make them smaller."
+        ],
+        "answer": "A method of grouping data into packets, which are then routed independently across a network."
+    },
+    {
+        "question": "[DEFINITION] Which part of a data packet contains the actual data being sent, such as part of an email or webpage?",
+        "options": [
+            "Header",
+            "Payload",
+            "Trailer",
+            "Checksum"
+        ],
+        "answer": "Payload"
+    },
+    {
+        "question": "What is the primary purpose of including the destination IP address in a packet's header?",
+        "options": [
+            "To identify the type of data being sent.",
+            "To tell routers where to forward the packet.",
+            "To check if the packet has been corrupted.",
+            "To know which computer originally sent the packet."
+        ],
+        "answer": "To tell routers where to forward the packet."
+    },
+    {
+        "question": "Which part of a packet is used to verify that the data has not been corrupted during transmission?",
+        "options": [
+            "The IP address",
+            "The packet number",
+            "The payload",
+            "The checksum or error-checking data"
+        ],
+        "answer": "The checksum or error-checking data"
+    },
+    {
+        "question": "In packet switching, why are files broken down into multiple packets?",
+        "options": [
+            "To make the files larger and more secure.",
+            "To allow multiple users to share a network connection efficiently.",
+            "Because a single packet can hold an entire file.",
+            "To ensure all packets arrive at the same time."
+        ],
+        "answer": "To allow multiple users to share a network connection efficiently."
+    },
+    {
+        "question": "A user is watching a video online. The video data is sent as a stream of packets. What information in the packet header is essential for reassembling the packets in the correct order?",
+        "options": [
+            "The source IP address",
+            "The packet sequence number",
+            "The destination MAC address",
+            "The checksum"
+        ],
+        "answer": "The packet sequence number"
+    },
+    {
+        "question": "What is a major advantage of packet switching over circuit switching?",
+        "options": [
+            "It guarantees that all packets will arrive in order.",
+            "It is much less efficient in its use of the network.",
+            "It does not require a dedicated, end-to-end connection for the duration of the transmission.",
+            "It is an older and simpler technology."
+        ],
+        "answer": "It does not require a dedicated, end-to-end connection for the duration of the transmission."
+    },
+    {
+        "question": "A router receives a packet. What is the first thing it does to decide where to send the packet next?",
+        "options": [
+            "It checks the payload for viruses.",
+            "It examines the destination IP address in the packet's header.",
+            "It re-calculates the checksum.",
+            "It sends the packet to every device on the network."
+        ],
+        "answer": "It examines the destination IP address in the packet's header."
+    },
+    {
+        "question": "When sending an email, the packets that make up the email might travel through different routes from the sender to the receiver. What is this concept a feature of?",
+        "options": [
+            "File compression",
+            "Packet switching",
+            "Circuit switching",
+            "Email encryption"
+        ],
+        "answer": "Packet switching"
+    },
+    {
+        "question": "What happens at the destination computer once all the packets for a file have been received?",
+        "options": [
+            "The packets are immediately deleted.",
+            "The computer sends them back to the original sender.",
+            "The packets are reordered using their sequence numbers and the original file is reassembled.",
+            "The computer broadcasts the packets to the rest of the local network."
+        ],
+        "answer": "The packets are reordered using their sequence numbers and the original file is reassembled."
+    },
+    {
+        "question": "The part of the packet that contains control information, such as the source and destination addresses, is known as the:",
+        "options": [
+            "Body",
+            "Payload",
+        "Trailer",
+        "Header"
+        ],
+        "answer": "Header"
+    },
+    {
+        "question": "If a packet is found to be corrupted upon arrival, what usually happens?",
+        "options": [
+            "The corrupted packet is ignored and the file is reassembled without it.",
+            "The receiving computer attempts to fix the corrupted data.",
+            "A request is sent back to the sender to retransmit the missing or corrupted packet.",
+            "The entire file is re-requested from the start."
+        ],
+        "answer": "A request is sent back to the sender to retransmit the missing or corrupted packet."
+    },
+    {
+        "question": "Which of the following would NOT be found in the header of a typical data packet?",
+        "options": [
+            "Destination IP address",
+            "The full content of the file being sent",
+            "Packet sequence number",
+            "Source IP address"
+        ],
+        "answer": "The full content of the file being sent"
+    },
+    {
+        "question": "On a busy network, some packets may get delayed, leading to 'jitter' in a video call. This happens because packet switching...",
+        "options": [
+            "guarantees all packets arrive at the exact same time.",
+            "does not guarantee the delivery time for each individual packet.",
+            "sends all data through a single, dedicated path.",
+            "is not suitable for sending video data."
+        ],
+        "answer": "does not guarantee the delivery time for each individual packet."
+    },
+    {
+        "question": "A packet trailer might contain data that indicates...",
+        "options": [
+            "the IP address of the sender.",
+            "the end of the packet and error-checking information.",
+            "the total number of packets in the transmission.",
+            "the type of web browser being used."
+        ],
+        "answer": "the end of the packet and error-checking information."
+    },
+    {
+        "question": "What is a 'hop count' in the context of packet switching?",
+        "options": [
+            "The number of times a packet has been corrupted.",
+            "The total number of packets in a file.",
+            "The number of routers a packet has passed through on its journey.",
+            "A measure of the packet's physical size."
+        ],
+        "answer": "The number of routers a packet has passed through on its journey."
+    },
+    {
+        "question": "Why is packet switching described as a 'fault-tolerant' system?",
+        "options": [
+            "Because it never makes any errors.",
+            "Because it can automatically find new routes for packets if one router fails.",
+            "Because all packets must follow the exact same path.",
+            "Because it is immune to computer viruses."
+        ],
+        "answer": "Because it can automatically find new routes for packets if one router fails."
+    },
+    {
+        "question": "A user sends a 5MB image to a friend. The network protocol breaks this image into 1500-byte packets. How many packets will be created (approximately)?",
+        "options": [
+            "About 3 packets",
+            "About 35 packets",
+            "About 350 packets",
+            "About 3500 packets"
+        ],
+        "answer": "About 3500 packets"
+    },
+    {
+        "question": "The process of a router receiving a packet, examining its destination address, and sending it on towards its destination is known as:",
+        "options": [
+            "Packet assembly",
+            "Packet forwarding",
+            "Packet creation",
+            "Packet encryption"
+        ],
+        "answer": "Packet forwarding"
+    }
+];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreText = document.getElementById('score-text');
+        const redoBtn = document.getElementById('redo-btn');
+
+        let score = 0;
+        let questionsAnswered = 0;
+
+        /**
+         * NEW: Function to shuffle an array in place using the Fisher-Yates algorithm.
+         * @param {Array} array The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // MODIFIED: Function to build and display the quiz
+        function buildQuiz() {
+            quizContainer.innerHTML = '';
+            
+            // Create a shuffled copy of the questions to not alter the original array
+            const shuffledQuestions = shuffleArray([...quizData]);
+
+            shuffledQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-block');
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('text-lg', 'font-semibold', 'mb-4');
+                questionTitle.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3');
+                
+                // Create a shuffled copy of the options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('quiz-option', 'w-full', 'p-3', 'text-left', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-100', 'hover:border-blue-500', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+                    button.innerText = option;
+                    // Pass the whole question object and the options container for context
+                    button.onclick = () => selectAnswer(button, option, currentQuestion, optionsDiv);
+                    optionsDiv.appendChild(button);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // MODIFIED: Function to handle answer selection
+        function selectAnswer(selectedButton, selectedOption, currentQuestion, optionsContainer) {
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const correctAnswer = currentQuestion.answer;
+
+            // Disable all buttons for this question to prevent changing the answer
+            options.forEach(button => {
+                button.disabled = true;
+                if (button.innerText === correctAnswer) {
+                    button.classList.add('correct');
+                }
+            });
+
+            if (selectedOption !== correctAnswer) {
+                selectedButton.classList.add('incorrect');
+            } else {
+                score++;
+            }
+
+            questionsAnswered++;
+
+            // Check if all questions have been answered
+            if (questionsAnswered === quizData.length) {
+                showResults();
+            }
+        }
+
+        // Function to display the final score
+        function showResults() {
+            scoreText.innerText = `You scored ${score} out of ${quizData.length}!`;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Function to reset the quiz
+        function redoQuiz() {
+            score = 0;
+            questionsAnswered = 0;
+            resultsContainer.classList.add('hidden');
+            
+            // Re-build the quiz to get a new random order
+            buildQuiz();
+
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Event listener for the redo button
+        redoBtn.addEventListener('click', redoQuiz);
+
+        // Initialize the quiz when the page loads
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+    </script>
+</body>
+</html>
