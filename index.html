@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js"></script>
-    <script src="firebase-init.js"></script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Class Quizzes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        h1 { color: #333; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 15px 0; }
-        a { text-decoration: none; font-size: 1.2em; color: #007BFF; }
-        a:hover { text-decoration: underline; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+        }
     </style>
 </head>
-<body>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 id="welcome-message"></h1>
-        <button id="logout-button" style="padding: 8px 12px; cursor: pointer;">Logout</button>
+<body class="bg-gray-100">
+
+    <div class="max-w-3xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-lg">
+        <div class="flex justify-between items-center pb-4 border-b">
+            <h1 id="welcome-message" class="text-2xl font-bold text-gray-800"></h1>
+            <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                Logout
+            </button>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold text-gray-700">Please select a quiz:</h2>
+            <ul class="mt-4 space-y-3">
+                <li data-quiz-id="c2-packet-switching" data-total-questions="20" 
+                    class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
+                    <a href="Chapter-2/chapter-2-packet-structure-and-packet-switching.html" class="text-blue-600 hover:underline font-medium">
+                        Chapter 2: Packet Structure and Packet Switching
+                    </a>
+                    <span class="score-display text-gray-500 font-medium"></span>
+                </li>
+
+                <li data-quiz-id="c2-data-transmission" data-total-questions="20"
+                    class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
+                    <a href="Chapter-2/chapter-2-methods-of-data-transmission-and-usb.html" class="text-blue-600 hover:underline font-medium">
+                        Chapter 2: Methods of Data Transmission and USB
+                    </a>
+                    <span class="score-display text-gray-500 font-medium"></span>
+                </li>
+
+                <li data-quiz-id="c2-error-detection" data-total-questions="20"
+                    class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
+                    <a href="Chapter-2/chapter-2-error-detection-and-encryption.html" class="text-blue-600 hover:underline font-medium">
+                        Chapter 2: Error Detection and Encryption
+                    </a>
+                    <span class="score-display text-gray-500 font-medium"></span>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <hr>
-    
-    <h2>Please select a quiz from the list below:</h2>
-    <ul>
-        <li><a href="Chapter-2/chapter-2-packet-structure-and-packet-switching.html">Chapter 2: Packet Structure and Packet Switching</a></li>
-        <li><a href="Chapter-2/chapter-2-methods-of-data-transmission-and-usb.html">Chapter 2: Methods of Data Transmission and USB</a></li>
-        <li><a href="Chapter-2/chapter-2-error-detection-and-encryption.html">Chapter 2: Error Detection and Encryption</a></li>
-        </ul>
+    <script type="module" src="main.js"></script>
 
-    <script src="main.js"></script>
 </body>
-
 </html>
-
-
-
-
