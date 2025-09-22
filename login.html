@@ -1,81 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js"></script>
-    <script src="firebase-init.js"></script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Portal Login</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js"></script>
+    <script src="firebase-init.js"></script> <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f7f9;
-        }
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 320px;
-        }
-        h1 {
-            margin-top: 0;
-            color: #333;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box; /* Important for padding */
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007BFF;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #error-message {
-            color: #D8000C; /* Red color for errors */
-            margin-top: 15px;
-            font-weight: bold;
-            min-height: 20px; /* Prevents layout shift */
+            font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-    <div class="login-container">
-        <h1>Quiz Portal Login</h1>
-        <form id="login-form">
-            <label for="name-input">Please enter your first name:</label>
-            <input type="text" id="name-input" required autocomplete="off">
-            <button type="submit">Login</button>
-            <p id="error-message"></p>
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-lg p-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Quiz Portal Login</h1>
+            <p class="text-gray-500 mt-2">Please sign in to continue.</p>
+        </div>
+        
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="email-input" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <div class="mt-1">
+                    <input type="email" id="email-input" required autocomplete="email"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+
+            <div>
+                <label for="password-input" class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="mt-1">
+                    <input type="password" id="password-input" required autocomplete="current-password"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Sign in
+                </button>
+            </div>
+            
+            <p id="error-message" class="text-center text-sm text-red-600 min-h-[20px]"></p>
         </form>
     </div>
 
