@@ -7,14 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-        }
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <div class="max-w-3xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-lg">
+    <div id="loading-message" class="text-center p-10 text-xl font-semibold text-gray-500">
+        Loading...
+    </div>
+
+    <div id="app-content" style="display: none;" class="max-w-3xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-lg">
         <div class="flex justify-between items-center pb-4 border-b">
             <h1 id="welcome-message" class="text-2xl font-bold text-gray-800"></h1>
             <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
@@ -25,24 +27,19 @@
         <div class="mt-6">
             <h2 class="text-xl font-semibold text-gray-700">Please select a quiz:</h2>
             <ul class="mt-4 space-y-3">
-                <li data-quiz-id="c2-packet-switching" data-total-questions="20" 
-                    class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
+                <li data-quiz-id="c2-packet-switching" data-total-questions="20" class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
                     <a href="Chapter-2/chapter-2-packet-structure-and-packet-switching.html" class="text-blue-600 hover:underline font-medium">
                         Chapter 2: Packet Structure and Packet Switching
                     </a>
                     <span class="score-display text-gray-500 font-medium"></span>
                 </li>
-
-                <li data-quiz-id="c2-data-transmission" data-total-questions="20"
-                    class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
+                <li data-quiz-id="c2-data-transmission" data-total-questions="20" class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
                     <a href="Chapter-2/chapter-2-methods-of-data-transmission-and-usb.html" class="text-blue-600 hover:underline font-medium">
                         Chapter 2: Methods of Data Transmission and USB
                     </a>
                     <span class="score-display text-gray-500 font-medium"></span>
                 </li>
-
-                <li data-quiz-id="c2-error-detection" data-total-questions="20"
-                    class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
+                <li data-quiz-id="c2-error-detection" data-total-questions="20" class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
                     <a href="Chapter-2/chapter-2-error-detection-and-encryption.html" class="text-blue-600 hover:underline font-medium">
                         Chapter 2: Error Detection and Encryption
                     </a>
