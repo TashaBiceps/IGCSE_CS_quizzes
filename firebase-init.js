@@ -21,5 +21,6 @@ const app = firebase.initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 // Get references to the services we're going to use
-const auth = firebase.auth();
-const db = firebase.firestore();
+// At the bottom of firebase-init.js
+export const auth = getAuth(app);
+export const db = getFirestore(app);
