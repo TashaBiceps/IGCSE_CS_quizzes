@@ -1,35 +1,49 @@
-// Get elements from the main page
 const welcomeMessage = document.getElementById('welcome-message');
 const logoutButton = document.getElementById('logout-button');
 
-// --- This is an "Auth Guard" ---
-// It runs as soon as the page loads
-function checkLoginStatus() {
-    // Check for the logged-in user in local storage
-    const currentUser = localStorage.getItem('loggedInUser');
+function displayScores(userId) {
+    // Get the user's score document from Firestore
+    const userScoresRef = db.collection('scores').doc(userId);
 
-    if (currentUser) {
-        // If a user is found, display their name
-        welcomeMessage.textContent = 'Welcome, ' + currentUser + '!';
+    userScoresRef.get().then((doc) => {
+        if (doc.exists) {
+            const userScores = doc.data();
+            // Now display the scores, same logic as before
+            document.querySelectorAll('li[data-quiz-id]').forEach(item => {
+                const quizId = item.dataset.quizId;
+                const totalQuestions = item.dataset.totalQuestions;
+                const scoreData = userScores[quizId]; // scoreData might be an object now
+                
+                if (scoreData && scoreData.score !== undefined) {
+                    const scoreDisplaySpan = item.querySelector('.score-display');
+                    if (scoreDisplaySpan) {
+                        scoreDisplaySpan.textContent = `Top Score: ${scoreData.score} / ${totalQuestions}`;
+                    }
+                }
+            });
+        }
+    }).catch((error) => {
+        console.error("Error getting scores:", error);
+    });
+}
+
+// Listen for authentication state changes
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // User is signed in.
+        welcomeMessage.textContent = 'Welcome, ' + (user.email) + '!';
+        displayScores(user.uid); // Pass the user's unique ID
     } else {
-        // If NO user is found, they are not logged in.
-        // Redirect them back to the login page.
-        alert("You must be logged in to view this page.");
+        // User is signed out.
         window.location.href = 'login.html';
     }
-}
+});
 
-// --- Logout Logic ---
 function handleLogout() {
-    // Remove the user's name from local storage
-    localStorage.removeItem('loggedInUser');
-    
-    // Redirect back to the login page
-    window.location.href = 'login.html';
+    auth.signOut().then(() => {
+        // Sign-out successful.
+        window.location.href = 'login.html';
+    });
 }
 
-// Attach the logout function to the button's click event
 logoutButton.addEventListener('click', handleLogout);
-
-// Run the login check when the main page loads
-checkLoginStatus();
