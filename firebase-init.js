@@ -1,5 +1,8 @@
 // In firebase-init.js
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-analytics.js";
+
 // PASTE YOUR COPIED firebaseConfig OBJECT HERE
 const firebaseConfig = {
     apiKey: "AIzaSyAZJRs8Otce7v1Wex2iW6NuKxoFkouybsI",
