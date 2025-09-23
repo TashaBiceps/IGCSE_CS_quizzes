@@ -5,6 +5,7 @@
 export const quizzes = {
     "c2-error-detection": {
         title: "Error Detection and Encryption",
+        chapter: "Chapter 2",
         subtitle: "Test your knowledge of Chapter 2.",
         questions: [
             { question: "[DEFINITION] What is the primary purpose of encryption?", options: ["To make data files smaller.", "To check if data has been corrupted during transmission.", "To scramble data to make it unreadable to unauthorised users.", "To correct errors in a data packet automatically."], answer: "To scramble data to make it unreadable to unauthorised users." },
@@ -15,6 +16,7 @@ export const quizzes = {
     },
     "c2-packet-switching": {
         title: "Packet Structure and Packet Switching",
+        chapter: "Chapter 2",
         subtitle: "Test your knowledge of Chapter 2.",
         questions: [
             // TODO: Add all questions for this topic here
@@ -24,6 +26,7 @@ export const quizzes = {
     },
     "c2-data-transmission": {
         title: "Methods of Data Transmission and USB",
+        chapter: "Chapter 2",
         subtitle: "Test your knowledge of Chapter 2.",
         questions: [
             // TODO: Add all questions for this topic here
