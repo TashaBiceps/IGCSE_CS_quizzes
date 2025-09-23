@@ -22,7 +22,11 @@ function processAndRenderDashboard(userId) {
         const userScores = docSnap.exists() ? docSnap.data() : {};
         
         // --- 1. Process Data ---
-        const today = new Date().toISOString().slice(0, 10); // Get today's date as "YYYY-MM-DD"
+        const now = new Date();
+    	const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-11
+        const day = String(now.getDate()).padStart(2, '0');
+        const today = `${year}-${month}-${day}`;
         let quizzesCompletedToday = 0;
         const chapterData = {};
 
