@@ -66,9 +66,22 @@
             const userScoresRef = doc(db, 'scores', currentUser.uid);
             const totalQuestions = questions.length;
 
-            return setDoc(userScoresRef, {
-                [quizId]: { score: currentScore, total: totalQuestions }
-            }, { merge: true });
+            // The new data object now includes the 'lastCompleted' date
+            const scoreData = {
+                score: currentScore,
+                total: totalQuestions,
+                lastCompleted: new Date().toISOString() // Saves the current date and time
+            };
+
+            // Check against the existing high score before saving
+            userScoresRef.get().then((docSnap) => {
+                const existingData = docSnap.exists() ? docSnap.data()[quizId] : { score: 0 };
+                if (currentScore >= existingData.score) {
+                    setDoc(userScoresRef, {
+                        [quizId]: scoreData
+                    }, { merge: true });
+                }
+            });
         }
         
         // --- 4. POPULATE & BUILD THE QUIZ ---
