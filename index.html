@@ -16,42 +16,36 @@
         Loading...
     </div>
 
-    <div id="app-content" style="display: none;" class="max-w-3xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-lg">
-        <div class="flex justify-between items-center pb-4 border-b">
-            <h1 id="welcome-message" class="text-2xl font-bold text-gray-800"></h1>
-            <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+    <div id="app-content" style="display: none;" class="max-w-4xl mx-auto my-10 p-4 sm:p-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b mb-6">
+            <div>
+                <h1 id="welcome-message" class="text-3xl font-bold text-gray-800"></h1>
+                <p class="text-gray-500 mt-1">Here is your progress summary.</p>
+            </div>
+            <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors mt-4 sm:mt-0">
                 Logout
             </button>
         </div>
 
-        <div class="mt-6">
-            <h2 class="text-xl font-semibold text-gray-700">Please select a quiz:</h2>
-            <ul class="mt-4 space-y-3">
-                <li data-quiz-id="c2-packet-switching" data-total-questions="20" class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
-                    <a href="quiz/quiz.html?id=c2-packet-switching" class="text-blue-600 hover:underline font-medium">
-                        Chapter 2: Packet Structure and Packet Switching
-                    </a>
-                    <span class="score-display text-gray-500 font-medium"></span>
-                </li>
-                <li data-quiz-id="c2-data-transmission" data-total-questions="20" class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
-                    <a href="quiz/quiz.html?id=c2-data-transmission" class="text-blue-600 hover:underline font-medium">
-                        Chapter 2: Methods of Data Transmission and USB
-                    </a>
-                    <span class="score-display text-gray-500 font-medium"></span>
-                </li>
-                <li data-quiz-id="c2-error-detection" data-total-questions="20" class="p-4 rounded-lg flex justify-between items-center border hover:border-blue-500 transition-colors">
-                    <a href="quiz/quiz.html?id=c2-error-detection" class="text-blue-600 hover:underline font-medium">
-                        Chapter 2: Error Detection and Encryption
-                    </a>
-                    <span class="score-display text-gray-500 font-medium"></span>
-                </li>
-            </ul>
+        <div class="bg-white p-6 rounded-2xl shadow-lg mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-3">Today's Goal</h2>
+            <p class="text-gray-600">You're encouraged to complete 3 quizzes daily to stay on track.</p>
+            <div class="mt-4 flex items-center gap-4">
+                <div id="daily-progress-rings" class="flex gap-2">
+                    </div>
+                <p id="daily-summary-text" class="font-medium text-gray-700"></p>
+            </div>
         </div>
+
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Chapter Strengths</h2>
+        <div id="dashboard-container" class="space-y-6">
+            </div>
     </div>
 
     <script type="module" src="main.js"></script>
 
 </body>
 </html>
+
 
 
