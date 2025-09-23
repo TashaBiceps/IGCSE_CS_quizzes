@@ -77,7 +77,7 @@ function processAndRenderDashboard(userId) {
                 <ul class="space-y-2 mt-4">
                     ${Object.keys(quizzes).filter(id => (quizzes[id].chapter || "General") === chapter).map(id => `
                         <li class="flex justify-between items-center">
-                            <a href="quiz.html?id=${id}" class="text-blue-600 hover:underline">
+                            <a href="./quiz/quiz.html?id=${id}" class="text-blue-600 hover:underline">
                                 ${quizzes[id].title}
                             </a>
                             <span class="text-gray-500 font-medium text-sm">
