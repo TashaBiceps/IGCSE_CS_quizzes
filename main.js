@@ -4,7 +4,7 @@ import { auth, db } from './firebase-init.js';
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 // We now need to import the quiz data to get titles and group by chapter
-import { quizzes } from './quizzes.js';
+import { quizzes } from 'quiz/quizzes.js';
 
 const welcomeMessage = document.getElementById('welcome-message');
 const logoutButton = document.getElementById('logout-button');
