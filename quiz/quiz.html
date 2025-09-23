@@ -74,7 +74,7 @@
             };
 
             // Check against the existing high score before saving
-            getDoc(userScoreRef).then((docSnap) => {
+            getDoc(userScoresRef).then((docSnap) => {
                 const existingData = docSnap.exists() ? docSnap.data()[quizId] : { score: 0 };
                 if (currentScore >= existingData.score) {
                     setDoc(userScoresRef, {
