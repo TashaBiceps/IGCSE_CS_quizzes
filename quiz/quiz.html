@@ -36,7 +36,7 @@
         // Import Firebase services and the quizzes database
         import { auth, db } from '../firebase-init.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+        import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
         import { quizzes } from './quizzes.js';
 
         // --- 1. GET THE QUIZ ID FROM THE URL ---
@@ -74,13 +74,15 @@
             };
 
             // Check against the existing high score before saving
-            userScoresRef.get().then((docSnap) => {
+            getDoc(userScoreRef).then((docSnap) => {
                 const existingData = docSnap.exists() ? docSnap.data()[quizId] : { score: 0 };
                 if (currentScore >= existingData.score) {
                     setDoc(userScoresRef, {
                         [quizId]: scoreData
                     }, { merge: true });
                 }
+            }).catch(error => {
+                console.error("Error checking high score: ", error);
             });
         }
         
