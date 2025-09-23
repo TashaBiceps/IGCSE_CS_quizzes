@@ -62,27 +62,33 @@
         // --- 3. SAVE HIGH SCORE (This function is updated for Firestore) ---
         function saveHighScore(currentScore) {
             if (!currentUser) return;
-
+        
+            // --- New Cycle Calculation Logic ---
+            const genesisDate = new Date('2024-01-01T00:00:00Z');
+            const now = new Date();
+            const daysSinceGenesis = Math.floor((now - genesisDate) / (1000 * 60 * 60 * 24));
+            const cycleId = Math.floor(daysSinceGenesis / 3);
+            // --- End of Cycle Calculation ---
+        
             const userScoresRef = doc(db, 'scores', currentUser.uid);
             const totalQuestions = questions.length;
-
-            // The new data object now includes the 'lastCompleted' date
+            
             const scoreData = {
                 score: currentScore,
                 total: totalQuestions,
-                lastCompleted: new Date().toISOString() // Saves the current date and time
+                lastCompleted: new Date().toISOString(),
+                cycleId: cycleId // Tag the score with the current cycle
             };
-
-            // Check against the existing high score before saving
+        
             getDoc(userScoresRef).then((docSnap) => {
-                const existingData = docSnap.exists() ? docSnap.data()[quizId] : { score: 0 };
-                if (currentScore >= existingData.score) {
+                const existingData = docSnap.exists() && docSnap.data()[quizId] ? docSnap.data()[quizId] : { score: 0 };
+                
+                // Only save if it's a new cycle or the score is higher in the same cycle
+                if (existingData.cycleId !== cycleId || currentScore >= existingData.score) {
                     setDoc(userScoresRef, {
                         [quizId]: scoreData
                     }, { merge: true });
                 }
-            }).catch(error => {
-                console.error("Error checking high score: ", error);
             });
         }
         
