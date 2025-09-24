@@ -332,7 +332,7 @@ export const quizzes = {
             { "question": "Which of these is considered the strongest password?", "options": ["password123", "MyDogFluffy", "12345678", "jP7!gT&e9K"], "answer": "jP7!gT&e9K" },
             { "question": "To prevent accidental data loss, what is the most important security procedure an individual or company can implement?", "options": ["Installing a firewall", "Creating regular backups", "Using strong passwords", "Encrypting all data"], "answer": "Creating regular backups" }
         ]
-    }
+    },
     // CHAPTER 6
     "c6-ai-expert-systems": {
         title: "AI and Expert systems",
