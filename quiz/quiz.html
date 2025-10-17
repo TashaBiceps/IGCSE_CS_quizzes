@@ -113,6 +113,18 @@
             const shuffledQuestions = shuffleArray([...questions]);
             shuffledQuestions.forEach((currentQuestion, questionNumber) => {
                 const questionDiv = document.createElement('div');
+
+                if (currentQuestion.code) {
+                    const codeBlock = document.createElement('pre');
+                    codeBlock.className = 'bg-gray-800 text-white p-4 rounded-lg mb-4 font-mono text-sm';
+            
+                    const codeElement = document.createElement('code');
+                    codeElement.innerText = currentQuestion.code; // Use innerText to preserve line breaks
+            
+                    codeBlock.appendChild(codeElement);
+                    questionDiv.appendChild(codeBlock);
+                }
+                
                 const questionTitleEl = document.createElement('h2');
                 questionTitleEl.className = 'text-lg font-semibold mb-4';
                 questionTitleEl.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
