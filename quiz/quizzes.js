@@ -415,4 +415,231 @@ export const quizzes = {
             { "question": "A company decides to replace its human-staffed customer service call centre with AI-powered chatbots. This is an example of robotics/AI being used in...", "options": ["manufacturing.", "the service industry.", "exploration.", "hazardous environments."], "answer": "the service industry." }
         ]
     },
+    "p2-pseudocode-practice": {
+        title: "Paper 2: Pseudocode Practice",
+        chapter: "Paper 2 Practice",
+        subtitle: "Complete the pseudocode for these common algorithms and functions.",
+        questions: [
+    {
+        "question": "The following pseudocode should find the largest number in an array. Which line of code correctly replaces line 6?",
+        "code": "1 DECLARE Numbers: ARRAY[1:10] OF INTEGER\n2 DECLARE MaxValue: INTEGER\n3 DECLARE i: INTEGER\n4 MaxValue ← Numbers[1]\n5 FOR i ← 2 TO 10\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT MaxValue",
+        "options": [
+            "IF Numbers[i] > MaxValue THEN MaxValue ← Numbers[i]",
+            "IF MaxValue > Numbers[i] THEN MaxValue ← Numbers[i]",
+            "IF Numbers[i] = MaxValue THEN MaxValue ← Numbers[i]",
+            "MaxValue ← Numbers[i]"
+        ],
+        "answer": "IF Numbers[i] > MaxValue THEN MaxValue ← Numbers[i]"
+    },
+    {
+        "question": "This pseudocode should count how many students passed an exam (score >= 50). Which line correctly replaces line 6?",
+        "code": "1 DECLARE Scores: ARRAY[1:30] OF INTEGER\n2 DECLARE PassCount: INTEGER\n3 DECLARE i: INTEGER\n4 PassCount ← 0\n5 FOR i ← 1 TO 30\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT PassCount",
+        "options": [
+            "IF Scores[i] >= 50 THEN PassCount ← PassCount + 1",
+            "IF Scores[i] > 50 THEN PassCount ← 1",
+            "IF Scores[i] < 50 THEN PassCount ← PassCount + 1",
+            "PassCount ← PassCount + 1"
+        ],
+        "answer": "IF Scores[i] >= 50 THEN PassCount ← PassCount + 1"
+    },
+    {
+        "question": "This is a linear search algorithm to find a name in an array. Which line correctly replaces line 5?",
+        "code": "1 DECLARE Names: ARRAY[1:100] OF STRING\n2 DECLARE SearchName: STRING\n3 DECLARE Found: BOOLEAN\n4 DECLARE i: INTEGER\n5 // [MISSING LINE]\n6 WHILE i <= 100 AND Found = FALSE\n7   IF Names[i] = SearchName THEN Found ← TRUE\n8   i ← i + 1\n9 ENDWHILE",
+        "options": [
+            "i ← 1",
+            "i ← 0",
+            "Found ← TRUE",
+            "DECLARE i: INTEGER"
+        ],
+        "answer": "i ← 1"
+    },
+    {
+        "question": "The following pseudocode should calculate the total sum of numbers in an array. Which line correctly replaces line 6?",
+        "code": "1 DECLARE Values: ARRAY[1:50] OF REAL\n2 DECLARE Total: REAL\n3 DECLARE i: INTEGER\n4 Total ← 0.0\n5 FOR i ← 1 TO 50\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT Total",
+        "options": [
+            "Total ← Total + Values[i]",
+            "Total ← Values[i]",
+            "OUTPUT Total",
+            "Total ← Total + 1"
+        ],
+        "answer": "Total ← Total + Values[i]"
+    },
+    {
+        "question": "This function should take a string and return its length. Which line correctly replaces line 2?",
+        "code": "1 FUNCTION GetStringLength(MyString : STRING) RETURNS INTEGER\n2   // [MISSING LINE]\n3 ENDFUNCTION",
+        "options": [
+            "RETURN LENGTH(MyString)",
+            "RETURN LEN(MyString)",
+            "OUTPUT LENGTH(MyString)",
+            "LENGTH(MyString)"
+        ],
+        "answer": "RETURN LENGTH(MyString)"
+    },
+    {
+        "question": "This procedure should print all even numbers between 1 and 20. Which line correctly replaces line 2?",
+        "code": "1 PROCEDURE PrintEvenNumbers()\n2   // [MISSING LINE]\n3     IF i MOD 2 = 0 THEN\n4       OUTPUT i\n5     ENDIF\n6   NEXT i\n7 ENDPROCEDURE",
+        "options": [
+            "FOR i ← 1 TO 20",
+            "FOR i ← 2 TO 20",
+            "WHILE i < 20",
+            "REPEAT i ← i + 2"
+        ],
+        "answer": "FOR i ← 1 TO 20"
+    },
+    {
+        "question": "This pseudocode uses a REPEAT...UNTIL loop to validate user input, accepting only 'Y' or 'N'. Which line correctly replaces line 3?",
+        "code": "1 DECLARE UserInput: CHAR\n2 REPEAT\n3   // [MISSING LINE]\n4 UNTIL UserInput = 'Y' OR UserInput = 'N'",
+        "options": [
+            "INPUT UserInput",
+            "OUTPUT UserInput",
+            "WHILE UserInput <> 'Y'",
+            "UserInput ← 'Y'"
+        ],
+        "answer": "INPUT UserInput"
+    },
+    {
+        "question": "This function should calculate the average of 10 numbers stored in an array. Which line correctly replaces line 8?",
+        "code": "1 FUNCTION CalculateAverage(Values: ARRAY[1:10] OF REAL) RETURNS REAL\n2   DECLARE Total: REAL\n3   DECLARE i: INTEGER\n4   Total ← 0.0\n5   FOR i ← 1 TO 10\n6     Total ← Total + Values[i]\n7   NEXT i\n8   // [MISSING LINE]\n9 ENDFUNCTION",
+        "options": [
+            "RETURN Total / 10",
+            "OUTPUT Total / 10",
+            "RETURN Total",
+            "Average ← Total / 10"
+        ],
+        "answer": "RETURN Total / 10"
+    },
+    {
+        "question": "This pseudocode fragment is part of a bubble sort algorithm. It compares two adjacent elements. Which line correctly replaces line 2?",
+        "code": "1 // Part of a bubble sort loop...\n2 // [MISSING LINE]\n3   DECLARE Temp: INTEGER\n4   Temp ← MyArray[j]\n5   MyArray[j] ← MyArray[j+1]\n6   MyArray[j+1] ← Temp\n7 ENDIF",
+        "options": [
+            "IF MyArray[j] > MyArray[j+1] THEN",
+            "IF MyArray[j] < MyArray[j+1] THEN",
+            "IF MyArray[j] = MyArray[j+1] THEN",
+            "WHILE MyArray[j] > MyArray[j+1]"
+        ],
+        "answer": "IF MyArray[j] > MyArray[j+1] THEN"
+    },
+    {
+        "question": "This WHILE loop should continue as long as a user has not entered the password 'secret'. Which line correctly replaces line 3?",
+        "code": "1 DECLARE PasswordGuess: STRING\n2 INPUT PasswordGuess\n3 // [MISSING LINE]\n4   OUTPUT \"Incorrect, try again.\"\n5   INPUT PasswordGuess\n6 ENDWHILE\n7 OUTPUT \"Access granted.\"",
+        "options": [
+            "WHILE PasswordGuess <> \"secret\"",
+            "WHILE PasswordGuess = \"secret\"",
+            "REPEAT",
+            "UNTIL PasswordGuess = \"secret\""
+        ],
+        "answer": "WHILE PasswordGuess <> \"secret\""
+    },
+    {
+        "question": "This pseudocode should find the smallest number in an array. Which line correctly replaces line 6?",
+        "code": "1 DECLARE Scores: ARRAY[1:25] OF INTEGER\n2 DECLARE MinScore: INTEGER\n3 DECLARE i: INTEGER\n4 MinScore ← Scores[1]\n5 FOR i ← 2 TO 25\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT MinScore",
+        "options": [
+            "IF Scores[i] < MinScore THEN MinScore ← Scores[i]",
+            "IF MinScore < Scores[i] THEN MinScore ← Scores[i]",
+            "IF Scores[i] = MinScore THEN MinScore ← 0",
+            "MinScore ← Scores[i]"
+        ],
+        "answer": "IF Scores[i] < MinScore THEN MinScore ← Scores[i]"
+    },
+    {
+        "question": "The following pseudocode uses nested loops to process a 2D array. What will this code output?",
+        "code": "1 DECLARE Grid: ARRAY[1:2, 1:2] OF INTEGER\n2 Grid[1,1]←5; Grid[1,2]←2; Grid[2,1]←8; Grid[2,2]←4\n3 DECLARE Total: INTEGER\n4 Total ← 0\n5 FOR Row ← 1 TO 2\n6   FOR Col ← 1 TO 2\n7     Total ← Total + Grid[Row, Col]\n8   NEXT Col\n9 NEXT Row\n10 OUTPUT Total",
+        "options": [
+            "10 (the sum of the first row)",
+            "19 (the sum of all elements)",
+            "12 (the sum of the second row)",
+            "13 (the sum of the first column)"
+        ],
+        "answer": "19 (the sum of all elements)"
+    },
+    {
+        "question": "This function should return the middle character of a given string. Which line correctly replaces line 2?",
+        "code": "1 FUNCTION GetMidChar(Word: STRING) RETURNS CHAR\n2   // [MISSING LINE]\n3 ENDFUNCTION\n// Example: GetMidChar(\"HELLO\") should return 'L'",
+        "options": [
+            "RETURN SUBSTRING(Word, 3, 1)",
+            "RETURN MID(Word, 3, 1)",
+            "RETURN CHARACTER(Word, 3)",
+            "RETURN Word[3]"
+        ],
+        "answer": "RETURN MID(Word, 3, 1)"
+    },
+    {
+        "question": "This procedure takes a number as input and outputs whether it is positive, negative, or zero. Which line correctly replaces line 2?",
+        "code": "1 PROCEDURE CheckNumber(Num : INTEGER)\n2   // [MISSING LINE]\n3     OUTPUT \"Positive\"\n4   ELSEIF Num < 0 THEN\n5     OUTPUT \"Negative\"\n6   ELSE\n7     OUTPUT \"Zero\"\n8   ENDIF\n9 ENDPROCEDURE",
+        "options": [
+            "IF Num > 0 THEN",
+            "IF Num >= 0 THEN",
+            "IF Num = 0 THEN",
+            "CASE OF Num"
+        ],
+        "answer": "IF Num > 0 THEN"
+    },
+    {
+        "question": "This code attempts to count vowels ('a','e','i','o','u') in a sentence. Which line correctly replaces line 7?",
+        "code": "1 DECLARE Sentence: STRING\n2 DECLARE VowelCount, i: INTEGER\n3 VowelCount ← 0\n4 FOR i ← 1 TO LENGTH(Sentence)\n5   DECLARE Char: CHAR\n6   Char ← MID(Sentence, i, 1)\n7   // [MISSING LINE]\n8 NEXT i\n9 OUTPUT VowelCount",
+        "options": [
+            "IF Char = 'a' OR Char = 'e' OR Char = 'i' OR Char = 'o' OR Char = 'u' THEN VowelCount ← VowelCount + 1",
+            "IF Char IN [\"a\",\"e\",\"i\",\"o\",\"u\"] THEN VowelCount ← VowelCount + 1",
+            "CASE OF Char: 'a','e','i','o','u': VowelCount ← VowelCount + 1 ENDCASE",
+            "All of the above are valid ways to check for a vowel"
+        ],
+        "answer": "All of the above are valid ways to check for a vowel"
+    },
+    {
+        "question": "This linear search function should return the position of the item if found, or -1 if not found. Which line correctly replaces line 10?",
+        "code": "1 FUNCTION FindItem(Item: STRING, List: ARRAY[1:50] OF STRING) RETURNS INTEGER\n2   DECLARE i: INTEGER\n3   DECLARE Found: BOOLEAN\n4   i ← 1\n5   Found ← FALSE\n6   WHILE i <= 50 AND Found = FALSE\n7     IF List[i] = Item THEN Found ← TRUE\n8     ELSE i ← i + 1\n9   ENDWHILE\n10  // [MISSING LINE]",
+        "options": [
+            "IF Found = TRUE THEN RETURN i ELSE RETURN -1",
+            "IF Found = TRUE THEN RETURN -1 ELSE RETURN i",
+            "RETURN i",
+            "RETURN Found"
+        ],
+        "answer": "IF Found = TRUE THEN RETURN i ELSE RETURN -1"
+    },
+    {
+        "question": "This pseudocode performs a 'totalling' operation, adding user inputs until a sentinel value of -1 is entered. Which line correctly replaces line 3?",
+        "code": "1 DECLARE Total, UserValue: INTEGER\n2 Total ← 0\n3 // [MISSING LINE]\n4 WHILE UserValue <> -1\n5   Total ← Total + UserValue\n6   INPUT UserValue\n7 ENDWHILE\n8 OUTPUT Total",
+        "options": [
+            "INPUT UserValue",
+            "UserValue ← 0",
+            "WHILE UserValue <> -1",
+            "OUTPUT \"Enter a number\""
+        ],
+        "answer": "INPUT UserValue"
+    },
+    {
+        "question": "This bubble sort algorithm is sorting an array of size 10. The outer loop controls the passes. Which line correctly replaces the inner loop condition on line 5?",
+        "code": "1 DECLARE Numbers: ARRAY[1:10] OF INTEGER\n2 DECLARE i, j, Temp: INTEGER\n3 FOR i ← 1 TO 9\n4   // Inner loop for comparisons\n5   // [MISSING LINE]\n6     IF Numbers[j] > Numbers[j+1] THEN\n7       // Swap elements\n8     ENDIF\n9   NEXT j\n10 NEXT i",
+        "options": [
+            "FOR j ← 1 TO 10",
+            "FOR j ← 1 TO 9",
+            "FOR j ← 1 TO 10 - i",
+            "FOR j ← i + 1 TO 10"
+        ],
+        "answer": "FOR j ← 1 TO 10 - i"
+    },
+    {
+        "question": "This procedure is meant to display a 2D array representing a tic-tac-toe board. Which line correctly replaces line 6?",
+        "code": "1 DECLARE Board: ARRAY[1:3, 1:3] OF CHAR\n2 DECLARE Row, Col: INTEGER\n3 // ... code to fill the board ...\n4 FOR Row ← 1 TO 3\n5   FOR Col ← 1 TO 3\n6     // [MISSING LINE]\n7   NEXT Col\n8   OUTPUT \"\" // To create a new line\n9 NEXT Row",
+        "options": [
+            "OUTPUT Board[Row, Col]",
+            "INPUT Board[Row, Col]",
+            "OUTPUT Board[Col, Row]",
+            "OUTPUT Board[Row]"
+        ],
+        "answer": "OUTPUT Board[Row, Col]"
+    },
+    {
+        "question": "A CASE statement is used to assign a grade based on a score. What should replace the missing line to handle scores below 50?",
+        "code": "1 DECLARE Score: INTEGER\n2 INPUT Score\n3 CASE OF Score\n4   90..100 : OUTPUT \"A\"\n5   70..89  : OUTPUT \"B\"\n6   50..69  : OUTPUT \"C\"\n7   // [MISSING LINE]\n8 ENDCASE",
+        "options": [
+            "ELSE : OUTPUT \"Fail\"",
+            "OTHERWISE : OUTPUT \"Fail\"",
+            "DEFAULT : OUTPUT \"Fail\"",
+            "FAIL : OUTPUT \"Fail\""
+        ],
+        "answer": "OTHERWISE : OUTPUT \"Fail\""
+    }
+]
+    }
 };
