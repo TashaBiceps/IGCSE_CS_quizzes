@@ -423,7 +423,7 @@ export const quizzes = {
         questions: [
             // --- Type 1: Multiple Choice (Function/Role) ---
             {
-                "type": "mc", // Multiple Choice
+                "type": "mc",
                 "question": "In the provided linear search pseudocode, what is the purpose of the line 'Found ← FALSE'?",
                 "code": "1 DECLARE DataArray : ARRAY[1:100] OF INTEGER\n2 DECLARE SearchValue : INTEGER\n3 DECLARE Found : BOOLEAN\n4 DECLARE ArrayIndex : INTEGER\n5 Found ← FALSE\n6 ArrayIndex ← 1\n7 WHILE Found = FALSE AND ArrayIndex <= 100 DO\n...\n12 ENDWHILE",
                 "options": [
@@ -461,7 +461,7 @@ export const quizzes = {
             {
                 "type": "mc",
                 "question": "Why is the line 'Found ← TRUE' executed when a match is found?",
-                "code": "...IF DataArray[ArrayIndex] = SearchValue THEN\n    OUTPUT \"Found at \" & ArrayIndex\n    Found ← TRUE\n...",
+                "code": "...IF DataArray[ArrayIndex] = SearchValue THEN\n  OUTPUT \"Found at \" & ArrayIndex\n  Found ← TRUE\n...",
                 "options": [
                     "To indicate an error occurred.",
                     "To move to the next item in the array.",
@@ -473,7 +473,7 @@ export const quizzes = {
             {
                 "type": "mc",
                 "question": "What is the purpose of the line 'ArrayIndex ← ArrayIndex + 1' in the ELSE block?",
-                "code": "...ELSE\n    ArrayIndex ← ArrayIndex + 1\nENDIF...",
+                "code": "...ELSE\n  ArrayIndex ← ArrayIndex + 1\nENDIF...",
                 "options": [
                     "To indicate the item has been found.",
                     "To stop the search loop.",
@@ -513,7 +513,7 @@ export const quizzes = {
                     "The maximum index allowed (e.g., if array is [0:N], length is N+1).",
                     "The index of the first element."
                 ],
-                "answer": "The number of elements currently stored in the array." // Or potentially max index + 1 depending on convention, but this is safer.
+                "answer": "The number of elements currently stored in the array."
             },
             {
                 "type": "mc",
@@ -541,51 +541,51 @@ export const quizzes = {
             },
             // --- Type 2: Fill-in-the-Blank ---
             {
-                "type": "typed", // Fill-in-the-blank
+                "type": "typed",
                 "question": "This linear search pseudocode needs to initialize the array index before the loop. Type the missing line.",
                 "code": "1 DECLARE DataArray : ARRAY[0:99] OF INTEGER\n2 DECLARE SearchValue : INTEGER\n3 DECLARE Found : BOOLEAN\n4 DECLARE ArrayIndex : INTEGER\n5 Found ← FALSE\n6 // [TYPE YOUR ANSWER HERE]\n7 WHILE Found = FALSE AND ArrayIndex <= 99 DO\n...\n12 ENDWHILE",
-                "answer": "ArrayIndex ← 0" // Note: Index starts at 0 here
+                "answer": "ArrayIndex <- 0" // Changed ← to <-
             },
             {
                 "type": "typed",
                 "question": "Complete the WHILE loop condition for a linear search that continues as long as the item is not found AND the index is within the valid range (0 to N-1).",
                 "code": "...\nArrayIndex ← 0\n// [TYPE YOUR ANSWER HERE]\n  IF DataArray[ArrayIndex] = SearchValue THEN\n    Found ← TRUE\n  ELSE\n    ArrayIndex ← ArrayIndex + 1\n  ENDIF\nENDWHILE",
-                "answer": "WHILE Found = FALSE AND ArrayIndex < N DO" // Assuming N is the size
+                "answer": "WHILE Found = FALSE AND ArrayIndex < N DO" // No arrow here
             },
              {
                 "type": "typed",
                 "question": "Inside the linear search loop, if the item is found, the 'Found' flag needs to be set. Type the missing line.",
                 "code": "...WHILE Found = FALSE AND ArrayIndex <= MaxIndex DO\n  IF DataArray[ArrayIndex] = SearchValue THEN\n    OUTPUT \"Found at index \" & ArrayIndex\n    // [TYPE YOUR ANSWER HERE]\n  ELSE\n    ArrayIndex ← ArrayIndex + 1\n  ENDIF\nENDWHILE",
-                "answer": "Found ← TRUE"
+                "answer": "Found <- TRUE" // Changed ← to <-
             },
             {
                 "type": "typed",
                 "question": "If the current element does not match the search value, the index must be incremented to check the next element. Type the missing line.",
                  "code": "...WHILE Found = FALSE AND ArrayIndex <= MaxIndex DO\n  IF DataArray[ArrayIndex] = SearchValue THEN\n    Found ← TRUE\n  ELSE\n    // [TYPE YOUR ANSWER HERE]\n  ENDIF\nENDWHILE",
-                 "answer": "ArrayIndex ← ArrayIndex + 1"
+                 "answer": "ArrayIndex <- ArrayIndex + 1" // Changed ← to <-
             },
             {
                 "type": "typed",
                 "question": "This procedure searches for a Target value in an array `MyList`. It needs to initialize the `Found` flag before the loop. Type the missing line.",
                 "code": "PROCEDURE LinearSearch(MyList : ARRAY[1:50] OF STRING, Target : STRING)\n  DECLARE Index : INTEGER\n  DECLARE Found : BOOLEAN\n  Index ← 1\n  // [TYPE YOUR ANSWER HERE]\n  WHILE Index <= 50 AND Found = FALSE\n...\nENDPROCEDURE",
-                "answer": "Found ← FALSE"
+                "answer": "Found <- FALSE" // Changed ← to <-
             },
              {
                 "type": "typed",
                 "question": "Complete the IF statement line that checks if the element at the current `Index` matches the `Target` value.",
                 "code": "...WHILE Index <= 50 AND Found = FALSE\n  // [TYPE YOUR ANSWER HERE]\n    Found ← TRUE\n  ELSE\n    Index ← Index + 1\n  ENDIF\nENDWHILE...",
-                "answer": "IF MyList[Index] = Target THEN"
+                "answer": "IF MyList[Index] = Target THEN" // No arrow here
             },
              {
                 "type": "typed",
                 "question": "After the loop finishes, we need to check if the item was found. Complete the IF statement.",
                  "code": "...ENDWHILE\n// [TYPE YOUR ANSWER HERE]\n  OUTPUT Target & \" was found.\"\nELSE\n  OUTPUT Target & \" was not found.\"\nENDIF",
-                 "answer": "IF Found = TRUE THEN"
+                 "answer": "IF Found = TRUE THEN" // No arrow here
             },
-
+        
             // --- Type 3: Situational ---
             {
-                "type": "mc", // Situational, but still multiple choice format
+                "type": "mc",
                 "question": "In which of these scenarios would a linear search be a reasonably efficient choice?",
                 "options": [
                     "Searching for a name in a very large, sorted telephone directory.",
