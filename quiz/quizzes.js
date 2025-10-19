@@ -415,231 +415,208 @@ export const quizzes = {
             { "question": "A company decides to replace its human-staffed customer service call centre with AI-powered chatbots. This is an example of robotics/AI being used in...", "options": ["manufacturing.", "the service industry.", "exploration.", "hazardous environments."], "answer": "the service industry." }
         ]
     },
-    "p2-pseudocode-practice": {
-        title: "Paper 2: Pseudocode Practice",
+    "p2-linear-search": {
+        title: "Paper 2: Linear Search",
         chapter: "Paper 2 Practice",
-        subtitle: "Complete the pseudocode for these common algorithms and functions.",
+        subtitle: "Test your knowledge of the linear search algorithm.",
+        quizType: "mixed", // Indicate this quiz has multiple question types
         questions: [
-    {
-        "question": "The following pseudocode should find the largest number in an array. Which line of code correctly replaces line 6?",
-        "code": "1 DECLARE Numbers: ARRAY[1:10] OF INTEGER\n2 DECLARE MaxValue: INTEGER\n3 DECLARE i: INTEGER\n4 MaxValue ← Numbers[1]\n5 FOR i ← 2 TO 10\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT MaxValue",
-        "options": [
-            "IF Numbers[i] > MaxValue THEN MaxValue ← Numbers[i]",
-            "IF MaxValue > Numbers[i] THEN MaxValue ← Numbers[i]",
-            "IF Numbers[i] = MaxValue THEN MaxValue ← Numbers[i]",
-            "MaxValue ← Numbers[i]"
-        ],
-        "answer": "IF Numbers[i] > MaxValue THEN MaxValue ← Numbers[i]"
+            // --- Type 1: Multiple Choice (Function/Role) ---
+            {
+                "type": "mc", // Multiple Choice
+                "question": "In the provided linear search pseudocode, what is the purpose of the line 'Found ← FALSE'?",
+                "code": "1 DECLARE DataArray : ARRAY[1:100] OF INTEGER\n2 DECLARE SearchValue : INTEGER\n3 DECLARE Found : BOOLEAN\n4 DECLARE ArrayIndex : INTEGER\n5 Found ← FALSE\n6 ArrayIndex ← 1\n7 WHILE Found = FALSE AND ArrayIndex <= 100 DO\n...\n12 ENDWHILE",
+                "options": [
+                    "To store the value being searched for.",
+                    "To initialize a flag indicating the item has not yet been located.",
+                    "To set the starting index for the search.",
+                    "To count the number of comparisons made."
+                ],
+                "answer": "To initialize a flag indicating the item has not yet been located."
+            },
+            {
+                "type": "mc",
+                "question": "What does the condition 'ArrayIndex < LENGTH(Array)' (or similar) in the WHILE loop condition ensure?",
+                "code": "...WHILE Found = FALSE AND ArrayIndex < LENGTH(Array) DO...",
+                "options": [
+                    "That the search stops immediately when the value is found.",
+                    "That the search does not continue beyond the bounds of the array.",
+                    "That the search only checks even-numbered indices.",
+                    "That the search continues indefinitely."
+                ],
+                "answer": "That the search does not continue beyond the bounds of the array."
+            },
+            {
+                "type": "mc",
+                "question": "What is the function of the line 'IF DataArray[ArrayIndex] = SearchValue THEN'?",
+                "code": "...IF DataArray[ArrayIndex] = SearchValue THEN...",
+                "options": [
+                    "It moves to the next element in the array.",
+                    "It checks if the current array element matches the target value.",
+                    "It stops the loop if the value is false.",
+                    "It initializes the search index."
+                ],
+                "answer": "It checks if the current array element matches the target value."
+            },
+            {
+                "type": "mc",
+                "question": "Why is the line 'Found ← TRUE' executed when a match is found?",
+                "code": "...IF DataArray[ArrayIndex] = SearchValue THEN\n    OUTPUT \"Found at \" & ArrayIndex\n    Found ← TRUE\n...",
+                "options": [
+                    "To indicate an error occurred.",
+                    "To move to the next item in the array.",
+                    "To signal that the search is complete and the loop should terminate.",
+                    "To reset the search index."
+                ],
+                "answer": "To signal that the search is complete and the loop should terminate."
+            },
+            {
+                "type": "mc",
+                "question": "What is the purpose of the line 'ArrayIndex ← ArrayIndex + 1' in the ELSE block?",
+                "code": "...ELSE\n    ArrayIndex ← ArrayIndex + 1\nENDIF...",
+                "options": [
+                    "To indicate the item has been found.",
+                    "To stop the search loop.",
+                    "To move the search to the next element in the array.",
+                    "To compare the current element with the search value."
+                ],
+                "answer": "To move the search to the next element in the array."
+            },
+             {
+                "type": "mc",
+                "question": "What is the primary role of the 'Found' variable in a linear search?",
+                "options": [
+                    "To store the index where the item was found.",
+                    "To count how many items are in the array.",
+                    "To act as a flag to control the main search loop.",
+                    "To store the value being searched for."
+                ],
+                "answer": "To act as a flag to control the main search loop."
+            },
+            {
+                "type": "mc",
+                "question": "Consider the loop condition: `WHILE Found = FALSE AND ArrayIndex <= MaxIndex DO`. What happens if `Found` becomes TRUE?",
+                "options": [
+                    "The loop continues to check the rest of the array.",
+                    "The loop terminates immediately.",
+                    "An error occurs.",
+                    "`ArrayIndex` resets to 1."
+                ],
+                "answer": "The loop terminates immediately."
+            },
+             {
+                "type": "mc",
+                "question": "What does the expression `LENGTH(DataArray)` typically represent in pseudocode?",
+                "options": [
+                    "The value of the last element.",
+                    "The number of elements currently stored in the array.",
+                    "The maximum index allowed (e.g., if array is [0:N], length is N+1).",
+                    "The index of the first element."
+                ],
+                "answer": "The number of elements currently stored in the array." // Or potentially max index + 1 depending on convention, but this is safer.
+            },
+            {
+                "type": "mc",
+                "question": "If the search value is NOT present in the array, what will be the state of the 'Found' variable after the WHILE loop finishes?",
+                 "code": "1 DECLARE DataArray : ARRAY[1:100] OF INTEGER\n...\n5 Found ← FALSE\n6 ArrayIndex ← 1\n7 WHILE Found = FALSE AND ArrayIndex <= 100 DO\n8   IF DataArray[ArrayIndex] = SearchValue THEN\n9     Found ← TRUE\n10  ELSE\n11    ArrayIndex ← ArrayIndex + 1\n12  ENDIF\n13 ENDWHILE\n14 // What is Found here if SearchValue was not in DataArray?",
+                "options": [
+                    "TRUE",
+                    "FALSE",
+                    "Undefined",
+                    "100"
+                ],
+                "answer": "FALSE"
+            },
+             {
+                "type": "mc",
+                "question": "In the provided code, the search starts at `ArrayIndex ← 1`. What assumption does this make about the array indexing?",
+                 "code": "...ArrayIndex ← 1\nWHILE Found = FALSE AND ArrayIndex <= 100 DO...",
+                 "options": [
+                    "The array indices start from 1.",
+                    "The array indices start from 0.",
+                    "The array is empty.",
+                    "The array is already sorted."
+                ],
+                "answer": "The array indices start from 1."
+            },
+            // --- Type 2: Fill-in-the-Blank ---
+            {
+                "type": "typed", // Fill-in-the-blank
+                "question": "This linear search pseudocode needs to initialize the array index before the loop. Type the missing line.",
+                "code": "1 DECLARE DataArray : ARRAY[0:99] OF INTEGER\n2 DECLARE SearchValue : INTEGER\n3 DECLARE Found : BOOLEAN\n4 DECLARE ArrayIndex : INTEGER\n5 Found ← FALSE\n6 // [TYPE YOUR ANSWER HERE]\n7 WHILE Found = FALSE AND ArrayIndex <= 99 DO\n...\n12 ENDWHILE",
+                "answer": "ArrayIndex ← 0" // Note: Index starts at 0 here
+            },
+            {
+                "type": "typed",
+                "question": "Complete the WHILE loop condition for a linear search that continues as long as the item is not found AND the index is within the valid range (0 to N-1).",
+                "code": "...\nArrayIndex ← 0\n// [TYPE YOUR ANSWER HERE]\n  IF DataArray[ArrayIndex] = SearchValue THEN\n    Found ← TRUE\n  ELSE\n    ArrayIndex ← ArrayIndex + 1\n  ENDIF\nENDWHILE",
+                "answer": "WHILE Found = FALSE AND ArrayIndex < N DO" // Assuming N is the size
+            },
+             {
+                "type": "typed",
+                "question": "Inside the linear search loop, if the item is found, the 'Found' flag needs to be set. Type the missing line.",
+                "code": "...WHILE Found = FALSE AND ArrayIndex <= MaxIndex DO\n  IF DataArray[ArrayIndex] = SearchValue THEN\n    OUTPUT \"Found at index \" & ArrayIndex\n    // [TYPE YOUR ANSWER HERE]\n  ELSE\n    ArrayIndex ← ArrayIndex + 1\n  ENDIF\nENDWHILE",
+                "answer": "Found ← TRUE"
+            },
+            {
+                "type": "typed",
+                "question": "If the current element does not match the search value, the index must be incremented to check the next element. Type the missing line.",
+                 "code": "...WHILE Found = FALSE AND ArrayIndex <= MaxIndex DO\n  IF DataArray[ArrayIndex] = SearchValue THEN\n    Found ← TRUE\n  ELSE\n    // [TYPE YOUR ANSWER HERE]\n  ENDIF\nENDWHILE",
+                 "answer": "ArrayIndex ← ArrayIndex + 1"
+            },
+            {
+                "type": "typed",
+                "question": "This procedure searches for a Target value in an array `MyList`. It needs to initialize the `Found` flag before the loop. Type the missing line.",
+                "code": "PROCEDURE LinearSearch(MyList : ARRAY[1:50] OF STRING, Target : STRING)\n  DECLARE Index : INTEGER\n  DECLARE Found : BOOLEAN\n  Index ← 1\n  // [TYPE YOUR ANSWER HERE]\n  WHILE Index <= 50 AND Found = FALSE\n...\nENDPROCEDURE",
+                "answer": "Found ← FALSE"
+            },
+             {
+                "type": "typed",
+                "question": "Complete the IF statement line that checks if the element at the current `Index` matches the `Target` value.",
+                "code": "...WHILE Index <= 50 AND Found = FALSE\n  // [TYPE YOUR ANSWER HERE]\n    Found ← TRUE\n  ELSE\n    Index ← Index + 1\n  ENDIF\nENDWHILE...",
+                "answer": "IF MyList[Index] = Target THEN"
+            },
+             {
+                "type": "typed",
+                "question": "After the loop finishes, we need to check if the item was found. Complete the IF statement.",
+                 "code": "...ENDWHILE\n// [TYPE YOUR ANSWER HERE]\n  OUTPUT Target & \" was found.\"\nELSE\n  OUTPUT Target & \" was not found.\"\nENDIF",
+                 "answer": "IF Found = TRUE THEN"
+            },
+
+            // --- Type 3: Situational ---
+            {
+                "type": "mc", // Situational, but still multiple choice format
+                "question": "In which of these scenarios would a linear search be a reasonably efficient choice?",
+                "options": [
+                    "Searching for a name in a very large, sorted telephone directory.",
+                    "Searching for a specific student ID in a small, unsorted list of attendees.",
+                    "Searching for a book title in a massive, sorted library database.",
+                    "Finding the highest score in a list of a million unsorted exam results."
+                ],
+                "answer": "Searching for a specific student ID in a small, unsorted list of attendees."
+            },
+            {
+                "type": "mc",
+                "question": "What is the main disadvantage of using linear search on a very large dataset?",
+                "options": [
+                    "It only works on sorted data.",
+                    "It requires a lot of memory.",
+                    "It can be very slow if the item is near the end or not present.",
+                    "It cannot find duplicate items."
+                ],
+                "answer": "It can be very slow if the item is near the end or not present."
+            },
+             {
+                "type": "mc",
+                "question": "Linear search is often used when:",
+                "options": [
+                    "The data is already sorted in descending order.",
+                    "Maximum speed is the absolute top priority for a huge dataset.",
+                    "The list is small, or the data is unsorted and simplicity is desired.",
+                    "You need to find the average value in the list."
+                ],
+                "answer": "The list is small, or the data is unsorted and simplicity is desired."
+            }
+        ]
     },
-    {
-        "question": "This pseudocode should count how many students passed an exam (score >= 50). Which line correctly replaces line 6?",
-        "code": "1 DECLARE Scores: ARRAY[1:30] OF INTEGER\n2 DECLARE PassCount: INTEGER\n3 DECLARE i: INTEGER\n4 PassCount ← 0\n5 FOR i ← 1 TO 30\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT PassCount",
-        "options": [
-            "IF Scores[i] >= 50 THEN PassCount ← PassCount + 1",
-            "IF Scores[i] > 50 THEN PassCount ← 1",
-            "IF Scores[i] < 50 THEN PassCount ← PassCount + 1",
-            "PassCount ← PassCount + 1"
-        ],
-        "answer": "IF Scores[i] >= 50 THEN PassCount ← PassCount + 1"
-    },
-    {
-        "question": "This is a linear search algorithm to find a name in an array. Which line correctly replaces line 5?",
-        "code": "1 DECLARE Names: ARRAY[1:100] OF STRING\n2 DECLARE SearchName: STRING\n3 DECLARE Found: BOOLEAN\n4 DECLARE i: INTEGER\n5 // [MISSING LINE]\n6 WHILE i <= 100 AND Found = FALSE\n7   IF Names[i] = SearchName THEN Found ← TRUE\n8   i ← i + 1\n9 ENDWHILE",
-        "options": [
-            "i ← 1",
-            "i ← 0",
-            "Found ← TRUE",
-            "DECLARE i: INTEGER"
-        ],
-        "answer": "i ← 1"
-    },
-    {
-        "question": "The following pseudocode should calculate the total sum of numbers in an array. Which line correctly replaces line 6?",
-        "code": "1 DECLARE Values: ARRAY[1:50] OF REAL\n2 DECLARE Total: REAL\n3 DECLARE i: INTEGER\n4 Total ← 0.0\n5 FOR i ← 1 TO 50\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT Total",
-        "options": [
-            "Total ← Total + Values[i]",
-            "Total ← Values[i]",
-            "OUTPUT Total",
-            "Total ← Total + 1"
-        ],
-        "answer": "Total ← Total + Values[i]"
-    },
-    {
-        "question": "This function should take a string and return its length. Which line correctly replaces line 2?",
-        "code": "1 FUNCTION GetStringLength(MyString : STRING) RETURNS INTEGER\n2   // [MISSING LINE]\n3 ENDFUNCTION",
-        "options": [
-            "RETURN LENGTH(MyString)",
-            "RETURN LEN(MyString)",
-            "OUTPUT LENGTH(MyString)",
-            "LENGTH(MyString)"
-        ],
-        "answer": "RETURN LENGTH(MyString)"
-    },
-    {
-        "question": "This procedure should print all even numbers between 1 and 20. Which line correctly replaces line 2?",
-        "code": "1 PROCEDURE PrintEvenNumbers()\n2   // [MISSING LINE]\n3     IF i MOD 2 = 0 THEN\n4       OUTPUT i\n5     ENDIF\n6   NEXT i\n7 ENDPROCEDURE",
-        "options": [
-            "FOR i ← 1 TO 20",
-            "FOR i ← 2 TO 20",
-            "WHILE i < 20",
-            "REPEAT i ← i + 2"
-        ],
-        "answer": "FOR i ← 1 TO 20"
-    },
-    {
-        "question": "This pseudocode uses a REPEAT...UNTIL loop to validate user input, accepting only 'Y' or 'N'. Which line correctly replaces line 3?",
-        "code": "1 DECLARE UserInput: CHAR\n2 REPEAT\n3   // [MISSING LINE]\n4 UNTIL UserInput = 'Y' OR UserInput = 'N'",
-        "options": [
-            "INPUT UserInput",
-            "OUTPUT UserInput",
-            "WHILE UserInput <> 'Y'",
-            "UserInput ← 'Y'"
-        ],
-        "answer": "INPUT UserInput"
-    },
-    {
-        "question": "This function should calculate the average of 10 numbers stored in an array. Which line correctly replaces line 8?",
-        "code": "1 FUNCTION CalculateAverage(Values: ARRAY[1:10] OF REAL) RETURNS REAL\n2   DECLARE Total: REAL\n3   DECLARE i: INTEGER\n4   Total ← 0.0\n5   FOR i ← 1 TO 10\n6     Total ← Total + Values[i]\n7   NEXT i\n8   // [MISSING LINE]\n9 ENDFUNCTION",
-        "options": [
-            "RETURN Total / 10",
-            "OUTPUT Total / 10",
-            "RETURN Total",
-            "Average ← Total / 10"
-        ],
-        "answer": "RETURN Total / 10"
-    },
-    {
-        "question": "This pseudocode fragment is part of a bubble sort algorithm. It compares two adjacent elements. Which line correctly replaces line 2?",
-        "code": "1 // Part of a bubble sort loop...\n2 // [MISSING LINE]\n3   DECLARE Temp: INTEGER\n4   Temp ← MyArray[j]\n5   MyArray[j] ← MyArray[j+1]\n6   MyArray[j+1] ← Temp\n7 ENDIF",
-        "options": [
-            "IF MyArray[j] > MyArray[j+1] THEN",
-            "IF MyArray[j] < MyArray[j+1] THEN",
-            "IF MyArray[j] = MyArray[j+1] THEN",
-            "WHILE MyArray[j] > MyArray[j+1]"
-        ],
-        "answer": "IF MyArray[j] > MyArray[j+1] THEN"
-    },
-    {
-        "question": "This WHILE loop should continue as long as a user has not entered the password 'secret'. Which line correctly replaces line 3?",
-        "code": "1 DECLARE PasswordGuess: STRING\n2 INPUT PasswordGuess\n3 // [MISSING LINE]\n4   OUTPUT \"Incorrect, try again.\"\n5   INPUT PasswordGuess\n6 ENDWHILE\n7 OUTPUT \"Access granted.\"",
-        "options": [
-            "WHILE PasswordGuess <> \"secret\"",
-            "WHILE PasswordGuess = \"secret\"",
-            "REPEAT",
-            "UNTIL PasswordGuess = \"secret\""
-        ],
-        "answer": "WHILE PasswordGuess <> \"secret\""
-    },
-    {
-        "question": "This pseudocode should find the smallest number in an array. Which line correctly replaces line 6?",
-        "code": "1 DECLARE Scores: ARRAY[1:25] OF INTEGER\n2 DECLARE MinScore: INTEGER\n3 DECLARE i: INTEGER\n4 MinScore ← Scores[1]\n5 FOR i ← 2 TO 25\n6   // [MISSING LINE]\n7 NEXT i\n8 OUTPUT MinScore",
-        "options": [
-            "IF Scores[i] < MinScore THEN MinScore ← Scores[i]",
-            "IF MinScore < Scores[i] THEN MinScore ← Scores[i]",
-            "IF Scores[i] = MinScore THEN MinScore ← 0",
-            "MinScore ← Scores[i]"
-        ],
-        "answer": "IF Scores[i] < MinScore THEN MinScore ← Scores[i]"
-    },
-    {
-        "question": "The following pseudocode uses nested loops to process a 2D array. What will this code output?",
-        "code": "1 DECLARE Grid: ARRAY[1:2, 1:2] OF INTEGER\n2 Grid[1,1]←5; Grid[1,2]←2; Grid[2,1]←8; Grid[2,2]←4\n3 DECLARE Total: INTEGER\n4 Total ← 0\n5 FOR Row ← 1 TO 2\n6   FOR Col ← 1 TO 2\n7     Total ← Total + Grid[Row, Col]\n8   NEXT Col\n9 NEXT Row\n10 OUTPUT Total",
-        "options": [
-            "10 (the sum of the first row)",
-            "19 (the sum of all elements)",
-            "12 (the sum of the second row)",
-            "13 (the sum of the first column)"
-        ],
-        "answer": "19 (the sum of all elements)"
-    },
-    {
-        "question": "This function should return the middle character of a given string. Which line correctly replaces line 2?",
-        "code": "1 FUNCTION GetMidChar(Word: STRING) RETURNS CHAR\n2   // [MISSING LINE]\n3 ENDFUNCTION\n// Example: GetMidChar(\"HELLO\") should return 'L'",
-        "options": [
-            "RETURN SUBSTRING(Word, 3, 1)",
-            "RETURN MID(Word, 3, 1)",
-            "RETURN CHARACTER(Word, 3)",
-            "RETURN Word[3]"
-        ],
-        "answer": "RETURN MID(Word, 3, 1)"
-    },
-    {
-        "question": "This procedure takes a number as input and outputs whether it is positive, negative, or zero. Which line correctly replaces line 2?",
-        "code": "1 PROCEDURE CheckNumber(Num : INTEGER)\n2   // [MISSING LINE]\n3     OUTPUT \"Positive\"\n4   ELSEIF Num < 0 THEN\n5     OUTPUT \"Negative\"\n6   ELSE\n7     OUTPUT \"Zero\"\n8   ENDIF\n9 ENDPROCEDURE",
-        "options": [
-            "IF Num > 0 THEN",
-            "IF Num >= 0 THEN",
-            "IF Num = 0 THEN",
-            "CASE OF Num"
-        ],
-        "answer": "IF Num > 0 THEN"
-    },
-    {
-        "question": "This code attempts to count vowels ('a','e','i','o','u') in a sentence. Which line correctly replaces line 7?",
-        "code": "1 DECLARE Sentence: STRING\n2 DECLARE VowelCount, i: INTEGER\n3 VowelCount ← 0\n4 FOR i ← 1 TO LENGTH(Sentence)\n5   DECLARE Char: CHAR\n6   Char ← MID(Sentence, i, 1)\n7   // [MISSING LINE]\n8 NEXT i\n9 OUTPUT VowelCount",
-        "options": [
-            "IF Char = 'a' OR Char = 'e' OR Char = 'i' OR Char = 'o' OR Char = 'u' THEN VowelCount ← VowelCount + 1",
-            "IF Char IN [\"a\",\"e\",\"i\",\"o\",\"u\"] THEN VowelCount ← VowelCount + 1",
-            "CASE OF Char: 'a','e','i','o','u': VowelCount ← VowelCount + 1 ENDCASE",
-            "All of the above are valid ways to check for a vowel"
-        ],
-        "answer": "All of the above are valid ways to check for a vowel"
-    },
-    {
-        "question": "This linear search function should return the position of the item if found, or -1 if not found. Which line correctly replaces line 10?",
-        "code": "1 FUNCTION FindItem(Item: STRING, List: ARRAY[1:50] OF STRING) RETURNS INTEGER\n2   DECLARE i: INTEGER\n3   DECLARE Found: BOOLEAN\n4   i ← 1\n5   Found ← FALSE\n6   WHILE i <= 50 AND Found = FALSE\n7     IF List[i] = Item THEN Found ← TRUE\n8     ELSE i ← i + 1\n9   ENDWHILE\n10  // [MISSING LINE]",
-        "options": [
-            "IF Found = TRUE THEN RETURN i ELSE RETURN -1",
-            "IF Found = TRUE THEN RETURN -1 ELSE RETURN i",
-            "RETURN i",
-            "RETURN Found"
-        ],
-        "answer": "IF Found = TRUE THEN RETURN i ELSE RETURN -1"
-    },
-    {
-        "question": "This pseudocode performs a 'totalling' operation, adding user inputs until a sentinel value of -1 is entered. Which line correctly replaces line 3?",
-        "code": "1 DECLARE Total, UserValue: INTEGER\n2 Total ← 0\n3 // [MISSING LINE]\n4 WHILE UserValue <> -1\n5   Total ← Total + UserValue\n6   INPUT UserValue\n7 ENDWHILE\n8 OUTPUT Total",
-        "options": [
-            "INPUT UserValue",
-            "UserValue ← 0",
-            "WHILE UserValue <> -1",
-            "OUTPUT \"Enter a number\""
-        ],
-        "answer": "INPUT UserValue"
-    },
-    {
-        "question": "This bubble sort algorithm is sorting an array of size 10. The outer loop controls the passes. Which line correctly replaces the inner loop condition on line 5?",
-        "code": "1 DECLARE Numbers: ARRAY[1:10] OF INTEGER\n2 DECLARE i, j, Temp: INTEGER\n3 FOR i ← 1 TO 9\n4   // Inner loop for comparisons\n5   // [MISSING LINE]\n6     IF Numbers[j] > Numbers[j+1] THEN\n7       // Swap elements\n8     ENDIF\n9   NEXT j\n10 NEXT i",
-        "options": [
-            "FOR j ← 1 TO 10",
-            "FOR j ← 1 TO 9",
-            "FOR j ← 1 TO 10 - i",
-            "FOR j ← i + 1 TO 10"
-        ],
-        "answer": "FOR j ← 1 TO 10 - i"
-    },
-    {
-        "question": "This procedure is meant to display a 2D array representing a tic-tac-toe board. Which line correctly replaces line 6?",
-        "code": "1 DECLARE Board: ARRAY[1:3, 1:3] OF CHAR\n2 DECLARE Row, Col: INTEGER\n3 // ... code to fill the board ...\n4 FOR Row ← 1 TO 3\n5   FOR Col ← 1 TO 3\n6     // [MISSING LINE]\n7   NEXT Col\n8   OUTPUT \"\" // To create a new line\n9 NEXT Row",
-        "options": [
-            "OUTPUT Board[Row, Col]",
-            "INPUT Board[Row, Col]",
-            "OUTPUT Board[Col, Row]",
-            "OUTPUT Board[Row]"
-        ],
-        "answer": "OUTPUT Board[Row, Col]"
-    },
-    {
-        "question": "A CASE statement is used to assign a grade based on a score. What should replace the missing line to handle scores below 50?",
-        "code": "1 DECLARE Score: INTEGER\n2 INPUT Score\n3 CASE OF Score\n4   90..100 : OUTPUT \"A\"\n5   70..89  : OUTPUT \"B\"\n6   50..69  : OUTPUT \"C\"\n7   // [MISSING LINE]\n8 ENDCASE",
-        "options": [
-            "ELSE : OUTPUT \"Fail\"",
-            "OTHERWISE : OUTPUT \"Fail\"",
-            "DEFAULT : OUTPUT \"Fail\"",
-            "FAIL : OUTPUT \"Fail\""
-        ],
-        "answer": "OTHERWISE : OUTPUT \"Fail\""
-    }
-]
-    }
 };
