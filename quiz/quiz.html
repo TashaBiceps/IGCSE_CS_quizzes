@@ -33,169 +33,237 @@
     </div>
 
     <script type="module">
-        // Import Firebase services and the quizzes database
-        import { auth, db } from '../firebase-init.js';
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-        import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-        import { quizzes } from './quizzes.js';
+    // --- Imports ---
+    import { auth, db } from '../firebase-init.js'; // Adjusted path
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    import { quizzes } from '../quizzes.js'; // Adjusted path
 
-        // --- 1. GET THE QUIZ ID FROM THE URL ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const quizId = urlParams.get('id'); // e.g., "c2-error-detection"
+    // --- Get URL Params & Quiz Data ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const quizId = urlParams.get('id');
+    const quizData = quizzes[quizId];
+    const questions = quizData ? quizData.questions : [];
 
-        // --- 2. FIND THE QUIZ DATA ---
-        const quizData = quizzes[quizId];
-        const questions = quizData ? quizData.questions : [];
+    // --- Get Page Elements ---
+    const quizContainer = document.getElementById('quiz-container');
+    const resultsContainer = document.getElementById('results-container');
+    const scoreText = document.getElementById('score-text');
+    const redoBtn = document.getElementById('redo-btn');
+    const quizTitle = document.getElementById('quiz-title');
+    const quizSubtitle = document.getElementById('quiz-subtitle');
 
-        // --- Get page elements ---
-        const quizContainer = document.getElementById('quiz-container');
-        const resultsContainer = document.getElementById('results-container');
-        const scoreText = document.getElementById('score-text');
-        const redoBtn = document.getElementById('redo-btn');
-        const quizTitle = document.getElementById('quiz-title');
-        const quizSubtitle = document.getElementById('quiz-subtitle');
-        
-        let score = 0;
-        let questionsAnswered = 0;
-        let currentUser = null;
+    // --- State Variables ---
+    let score = 0;
+    let questionsAnswered = 0;
+    let currentUser = null;
 
-        // --- 3. SAVE HIGH SCORE (This function is updated for Firestore) ---
-        function saveHighScore(currentScore) {
-            if (!currentUser) return;
-        
-            // --- New Cycle Calculation Logic ---
-            const genesisDate = new Date('2024-01-01T00:00:00Z');
-            const now = new Date();
-            const daysSinceGenesis = Math.floor((now - genesisDate) / (1000 * 60 * 60 * 24));
-            const cycleId = Math.floor(daysSinceGenesis / 3);
-            // --- End of Cycle Calculation ---
-        
-            const userScoresRef = doc(db, 'scores', currentUser.uid);
-            const totalQuestions = questions.length;
-            
-            const scoreData = {
-                score: currentScore,
-                total: totalQuestions,
-                lastCompleted: new Date().toISOString(),
-                cycleId: cycleId // Tag the score with the current cycle
-            };
-        
-            getDoc(userScoresRef).then((docSnap) => {
-                const existingData = docSnap.exists() && docSnap.data()[quizId] ? docSnap.data()[quizId] : { score: 0 };
-                
-                // Only save if it's a new cycle or the score is higher in the same cycle
-                if (existingData.cycleId !== cycleId || currentScore >= existingData.score) {
-                    setDoc(userScoresRef, {
-                        [quizId]: scoreData
-                    }, { merge: true });
-                }
-            });
-        }
-        
-        // --- 4. POPULATE & BUILD THE QUIZ ---
-        function initializePage() {
-            if (!quizData) {
-                quizTitle.textContent = "Quiz Not Found";
-                quizSubtitle.textContent = "Please check the ID and try again.";
-                return;
-            }
-
-            // Set the page title and headers
-            document.title = quizData.title;
-            quizTitle.textContent = quizData.title;
-            quizSubtitle.textContent = quizData.subtitle;
-            buildQuiz();
-        }
-
-        // --- The rest of your quiz logic (shuffle, selectAnswer, etc.) ---
-        function buildQuiz() {
-            quizContainer.innerHTML = '';
-            const shuffledQuestions = shuffleArray([...questions]);
-            shuffledQuestions.forEach((currentQuestion, questionNumber) => {
-                const questionDiv = document.createElement('div');
-
-                if (currentQuestion.code) {
-                    const codeBlock = document.createElement('pre');
-                    codeBlock.className = 'bg-gray-800 text-white p-4 rounded-lg mb-4 font-mono text-sm';
-            
-                    const codeElement = document.createElement('code');
-                    codeElement.innerText = currentQuestion.code; // Use innerText to preserve line breaks
-            
-                    codeBlock.appendChild(codeElement);
-                    questionDiv.appendChild(codeBlock);
-                }
-                
-                const questionTitleEl = document.createElement('h2');
-                questionTitleEl.className = 'text-lg font-semibold mb-4';
-                questionTitleEl.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
-                questionDiv.appendChild(questionTitleEl);
-                
-                const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
-                const shuffledOptions = shuffleArray([...currentQuestion.options]);
-                shuffledOptions.forEach(option => {
-                    const button = document.createElement('button');
-                    button.className = 'quiz-option w-full p-3 text-left border-2 border-gray-300 rounded-lg hover:bg-gray-100';
-                    button.innerText = option;
-                    button.onclick = () => selectAnswer(button, option, currentQuestion, optionsDiv);
-                    optionsDiv.appendChild(button);
-                });
-                
-                questionDiv.appendChild(optionsDiv);
-                quizContainer.appendChild(questionDiv);
-            });
-        }
-
-        function selectAnswer(selectedButton, selectedOption, currentQuestion, optionsContainer) {
-            const correctAnswer = currentQuestion.answer;
-            optionsContainer.querySelectorAll('.quiz-option').forEach(button => {
-                button.disabled = true;
-                if (button.innerText === correctAnswer) button.classList.add('correct');
-            });
-
-            if (selectedOption === correctAnswer) {
-                score++;
-            } else {
-                selectedButton.classList.add('incorrect');
-            }
-            questionsAnswered++;
-            if (questionsAnswered === questions.length) showResults();
-        }
-
-        function showResults() {
-            saveHighScore(score);
-            scoreText.innerText = `You scored ${score} out of ${questions.length}!`;
-            resultsContainer.classList.remove('hidden');
-        }
-
-        function redoQuiz() {
-            score = 0;
-            questionsAnswered = 0;
-            resultsContainer.classList.add('hidden');
-            buildQuiz();
-            quizContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // --- 5. INITIALIZE THE PAGE ON LOAD ---
-        redoBtn.addEventListener('click', redoQuiz);
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user; // Set the current user
-                initializePage(); // Load the quiz content
-            } else {
-                // Not logged in, redirect to login page
-                window.location.href = 'login.html';
+    // --- Firestore Function (No change needed here) ---
+    function saveHighScore(currentScore) {
+        if (!currentUser) return;
+        const genesisDate = new Date('2024-01-01T00:00:00Z'); // Ensure consistency
+        const now = new Date();
+        const daysSinceGenesis = Math.floor((now - genesisDate) / (1000 * 60 * 60 * 24));
+        const cycleId = Math.floor(daysSinceGenesis / 3);
+        const userScoresRef = doc(db, 'scores', currentUser.uid);
+        const totalQuestions = questions.length;
+        const scoreData = { score: currentScore, total: totalQuestions, lastCompleted: now.toISOString(), cycleId: cycleId };
+        getDoc(userScoresRef).then((docSnap) => {
+            const existingData = docSnap.exists() && docSnap.data()[quizId] ? docSnap.data()[quizId] : { score: 0, cycleId: -1 };
+            if (existingData.cycleId !== cycleId || currentScore >= existingData.score) {
+                setDoc(userScoresRef, { [quizId]: scoreData }, { merge: true });
             }
         });
-    </script>
+    }
+
+    // --- Fisher-Yates Shuffle Function ---
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // --- ⭐ UPDATED: buildQuiz Function ---
+    function buildQuiz() {
+        quizContainer.innerHTML = ''; // Clear previous content
+        // Shuffle questions only if you want the overall question order randomized
+        // const shuffledQuestions = shuffleArray([...questions]);
+        // questions.forEach((currentQuestion, questionNumber) => { // Use this if NOT shuffling questions
+
+        questions.forEach((currentQuestion, questionNumber) => { // Iterate through questions
+            const questionDiv = document.createElement('div');
+            questionDiv.id = `q-${questionNumber}`; // Unique ID for the question block
+            questionDiv.className = 'question-block mb-8 p-4 border rounded-lg bg-white shadow-sm'; // Added some styling
+
+            // Display code block if present
+            if (currentQuestion.code) {
+                const codeBlock = document.createElement('pre');
+                codeBlock.className = 'bg-gray-800 text-white p-4 rounded-lg mb-4 font-mono text-sm overflow-x-auto';
+                const codeElement = document.createElement('code');
+                codeElement.innerText = currentQuestion.code;
+                codeBlock.appendChild(codeElement);
+                questionDiv.appendChild(codeBlock);
+            }
+
+            // Display the question text
+            const questionTitleEl = document.createElement('h2');
+            questionTitleEl.className = 'text-lg font-semibold mb-4';
+            questionTitleEl.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+            questionDiv.appendChild(questionTitleEl);
+
+            // --- Logic to create MC or Typed Input ---
+            if (currentQuestion.type === "typed") {
+                // Generate Typed Input Elements
+                const answerContainer = document.createElement('div');
+                answerContainer.className = 'mt-4 flex flex-col sm:flex-row items-stretch gap-2';
+                answerContainer.innerHTML = `
+                    <input type="text" id="input-${questionNumber}" class="flex-grow font-mono text-sm p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Type the pseudocode line here...">
+                    <button id="btn-${questionNumber}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-lg">Check Answer</button>
+                `;
+                const feedbackEl = document.createElement('p');
+                feedbackEl.id = `feedback-${questionNumber}`;
+                feedbackEl.className = 'mt-2 text-sm font-semibold min-h-[20px]'; // Reserve space
+
+                questionDiv.appendChild(answerContainer);
+                questionDiv.appendChild(feedbackEl);
+
+                // Add event listener to the check button
+                document.getElementById(`btn-${questionNumber}`).addEventListener('click', () => {
+                    checkTypedAnswer(questionNumber);
+                });
+
+            } else { // Default to Multiple Choice if type is "mc" or undefined
+                // Generate Multiple Choice Buttons
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+                const shuffledOptions = shuffleArray([...currentQuestion.options]); // Shuffle options
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    // Add font-mono if options look like code
+                    const isCodeLike = option.includes('←') || option.includes('THEN') || option.includes('DO');
+                    button.className = `quiz-option w-full p-3 text-left border-2 border-gray-300 rounded-lg hover:bg-gray-100 ${isCodeLike ? 'font-mono text-sm' : ''}`;
+                    button.innerText = option;
+                    // Pass necessary info to the selectMCAnswer function
+                    button.onclick = () => selectMCAnswer(button, option, currentQuestion, questionNumber);
+                    optionsDiv.appendChild(button);
+                });
+                questionDiv.appendChild(optionsDiv);
+            }
+            quizContainer.appendChild(questionDiv);
+        });
+    }
+
+    // --- ⭐ UPDATED: selectMCAnswer Function (for Multiple Choice) ---
+    function selectMCAnswer(selectedButton, selectedOption, currentQuestion, questionNumber) {
+        const questionBlock = document.getElementById(`q-${questionNumber}`);
+        const optionsContainer = questionBlock.querySelector('.grid'); // Find the options div for this question
+        const options = optionsContainer.querySelectorAll('.quiz-option');
+        const correctAnswer = currentQuestion.answer;
+
+        // Disable all buttons for this question
+        options.forEach(button => {
+            button.disabled = true;
+            if (button.innerText === correctAnswer) {
+                button.classList.add('correct');
+            }
+        });
+
+        // Mark selected button as incorrect if wrong
+        if (selectedOption !== correctAnswer) {
+            selectedButton.classList.add('incorrect');
+        } else {
+            score++; // Increment score only if correct
+        }
+
+        questionsAnswered++; // Increment answered count
+        if (questionsAnswered === questions.length) showResults();
+    }
+
+    // --- ⭐ NEW: checkTypedAnswer Function (for Typed Input) ---
+    function checkTypedAnswer(questionNumber) {
+        const inputEl = document.getElementById(`input-${questionNumber}`);
+        const feedbackEl = document.getElementById(`feedback-${questionNumber}`);
+        const buttonEl = document.getElementById(`btn-${questionNumber}`);
+        const currentQuestion = questions[questionNumber];
+        const userAnswer = inputEl.value.trim();
+        const correctAnswer = currentQuestion.answer;
+
+        // Disable input and button
+        inputEl.disabled = true;
+        buttonEl.disabled = true;
+
+        // Basic check (case-insensitive, ignores extra spaces)
+        // You could add more sophisticated checks here if needed (e.g., ignore comments)
+        if (userAnswer.toLowerCase().replace(/\s+/g, ' ') === correctAnswer.toLowerCase().replace(/\s+/g, ' ')) {
+            feedbackEl.textContent = "Correct!";
+            feedbackEl.className += ' text-green-600';
+            inputEl.classList.add('bg-green-50', 'border-green-500');
+            score++; // Increment score
+        } else {
+            feedbackEl.innerHTML = `Incorrect. The correct answer was: <br><code class="font-mono bg-red-100 text-red-800 p-1 rounded">${correctAnswer}</code>`;
+            feedbackEl.className += ' text-red-600';
+            inputEl.classList.add('bg-red-50', 'border-red-500');
+        }
+
+        questionsAnswered++; // Increment answered count
+        if (questionsAnswered === questions.length) showResults();
+    }
+
+
+    // --- Show Results Function (No change needed) ---
+    function showResults() {
+        saveHighScore(score);
+        scoreText.innerText = `You scored ${score} out of ${questions.length}!`;
+        resultsContainer.classList.remove('hidden');
+    }
+
+    // --- Redo Quiz Function (Slight modification to reset inputs) ---
+    function redoQuiz() {
+        score = 0;
+        questionsAnswered = 0;
+        resultsContainer.classList.add('hidden');
+        // Clear all feedback and re-enable inputs/buttons
+        questions.forEach((q, index) => {
+            if (q.type === 'typed') {
+                const inputEl = document.getElementById(`input-${index}`);
+                const feedbackEl = document.getElementById(`feedback-${index}`);
+                const buttonEl = document.getElementById(`btn-${index}`);
+                if (inputEl) {
+                    inputEl.value = '';
+                    inputEl.disabled = false;
+                    inputEl.className = 'flex-grow font-mono text-sm p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400'; // Reset styles
+                }
+                if (feedbackEl) feedbackEl.innerHTML = '';
+                if (buttonEl) buttonEl.disabled = false;
+            }
+        });
+        buildQuiz(); // Rebuild the quiz (also re-enables MC buttons implicitly)
+        quizContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // --- Initialization ---
+    redoBtn.addEventListener('click', redoQuiz);
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user;
+            if (quizData) { // Check if quizData was found
+                document.title = quizData.title;
+                quizTitle.textContent = quizData.title;
+                quizSubtitle.textContent = quizData.subtitle;
+                buildQuiz();
+            } else {
+                quizTitle.textContent = "Quiz Not Found";
+                quizSubtitle.textContent = "Could not find quiz data for the provided ID.";
+            }
+        } else {
+            window.location.href = '../login.html'; // Adjusted path
+        }
+    });
+
+</script>
 </body>
 </html>
