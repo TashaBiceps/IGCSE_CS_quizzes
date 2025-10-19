@@ -619,4 +619,1040 @@ export const quizzes = {
             }
         ]
     },
-};
+    "p2-bubble-sort": {
+        title: "Paper 2: Bubble Sort",
+        chapter: "Paper 2 Practice",
+        subtitle: "Test your knowledge of the bubble sort algorithm.",
+        quizType: "mixed",
+        questions: [
+            // --- Type 1: Multiple Choice (Function/Role) ---
+            {
+                "type": "mc",
+                "question": "In the provided bubble sort pseudocode, what is the purpose of the 'Changes' variable?",
+                "code": "WHILE Changes = FALSE OR NumberPasses <= LENGTH(DataArray) - 1 DO\n  Changes ← FALSE\n  ...\n      Changes ← TRUE\n  ...\nENDWHILE",
+                "options": [
+                    "To count the number of elements in the array.",
+                    "To store the largest value found so far.",
+                    "To track whether any swaps were made during a pass through the array.",
+                    "To hold the index of the current element being compared."
+                ],
+                "answer": "To track whether any swaps were made during a pass through the array."
+            },
+            {
+                "type": "mc",
+                "question": "What does the line 'Changes ← FALSE' at the beginning of the WHILE loop body achieve?",
+                "code": "WHILE ... DO\n  Changes ← FALSE\n  FOR Index ← 0 to LENGTH(DataArray) - 1\n...",
+                "options": [
+                    "It stops the sort immediately.",
+                    "It indicates that a swap has just occurred.",
+                    "It resets the swap flag for the current pass, assuming no swaps have happened yet in this pass.",
+                    "It forces the sort to run exactly once."
+                ],
+                "answer": "It resets the swap flag for the current pass, assuming no swaps have happened yet in this pass."
+            },
+            {
+                "type": "mc",
+                "question": "What is the role of the 'FOR Index ← 0 to LENGTH(DataArray) - 1' loop?",
+                "code": "FOR Index ← 0 to LENGTH(DataArray) - 1\n  IF DataArray[Index] > DataArray[Index + 1] THEN\n    // Swap\n  ENDIF\nNEXT Index",
+                "options": [
+                    "To count the total number of passes.",
+                    "To iterate through the array elements, comparing adjacent pairs.",
+                    "To find the smallest element in the array.",
+                    "To reset the 'Changes' flag."
+                ],
+                "answer": "To iterate through the array elements, comparing adjacent pairs."
+            },
+            {
+                "type": "mc",
+                "question": "The condition 'IF DataArray[Index] > DataArray[Index + 1] THEN' checks if:",
+                "options": [
+                    "The two adjacent elements are equal.",
+                    "The element on the right is larger than the element on the left.",
+                    "The element on the left is larger than the element on the right (i.e., they are out of order for an ascending sort).",
+                    "The array is fully sorted."
+                ],
+                "answer": "The element on the left is larger than the element on the right (i.e., they are out of order for an ascending sort)."
+            },
+            {
+                "type": "mc",
+                "question": "What is the purpose of the three lines involving the 'Temp' variable?",
+                "code": "Temp ← DataArray[Index]\nDataArray[Index] ← DataArray[Index + 1]\nDataArray[Index + 1] ← Temp",
+                "options": [
+                    "To compare the two adjacent elements.",
+                    "To delete an element from the array.",
+                    "To swap the values of the two adjacent elements.",
+                    "To find the average of the two elements."
+                ],
+                "answer": "To swap the values of the two adjacent elements."
+            },
+            {
+                "type": "mc",
+                "question": "Why is the line 'Changes ← TRUE' executed immediately after the swap?",
+                "code": "//if not swap the items\nTemp ← DataArray[Index]\n...\nDataArray[Index + 1] ← Temp\nChanges ← TRUE",
+                "options": [
+                    "To stop the inner FOR loop.",
+                    "To indicate that the array is now sorted.",
+                    "To signal that a swap occurred during this pass, meaning the array might not be sorted yet.",
+                    "To reset the swap counter."
+                ],
+                "answer": "To signal that a swap occurred during this pass, meaning the array might not be sorted yet."
+            },
+             {
+                "type": "mc",
+                "question": "Based on standard bubble sort logic, under what condition should the outer WHILE loop ideally terminate?",
+                 "options": [
+                    "When `NumberPasses` reaches `LENGTH(DataArray) - 1`.",
+                    "When `Changes` remains `FALSE` after a complete pass through the FOR loop.",
+                    "Immediately after the first swap.",
+                    "When `Index` reaches `LENGTH(DataArray) - 1`."
+                ],
+                "answer": "When `Changes` remains `FALSE` after a complete pass through the FOR loop." // Based on standard logic, not the potentially flawed code provided
+            },
+             {
+                "type": "mc",
+                "question": "What does 'LENGTH(DataArray)' represent in the pseudocode?",
+                "options": [
+                    "The value of the last element.",
+                    "The total number of elements in the array.",
+                    "The index of the last element.",
+                    "The index of the first element."
+                ],
+                "answer": "The total number of elements in the array."
+            },
+            {
+                "type": "mc",
+                "question": "Why does the FOR loop typically iterate up to `LENGTH(DataArray) - 1` (or `LENGTH(DataArray) - 2` in some implementations)?",
+                "code": "FOR Index ← 0 to LENGTH(DataArray) - 1",
+                "options": [
+                    "Because array indices start at 1.",
+                    "To avoid an error when comparing `DataArray[Index]` with `DataArray[Index + 1]` on the last element.",
+                    "Because the last element is always sorted first.",
+                    "To make the sort run faster."
+                ],
+                "answer": "To avoid an error when comparing `DataArray[Index]` with `DataArray[Index + 1]` on the last element." // The code provided goes to -1, which is risky. -2 is safer if length is number of elements.
+            },
+             {
+                "type": "mc",
+                "question": "After one complete pass of the outer WHILE loop, what is guaranteed about the array?",
+                "options": [
+                    "The entire array is sorted.",
+                    "The smallest element is in the first position.",
+                    "The largest element has 'bubbled up' to the end of the array section considered in that pass.",
+                    "No changes were made to the array."
+                ],
+                "answer": "The largest element has 'bubbled up' to the end of the array section considered in that pass."
+            },
+            {
+                "type": "mc",
+                "question": "What is the purpose of the 'NumberPasses' variable mentioned in the comments?",
+                "code": "//continue until one pass has no changes (Changes = false)\n//or it has looped array length - 1 times",
+                "options": [
+                  "To count the number of swaps made.",
+                  "To ensure the algorithm terminates even if the 'Changes' flag logic fails (acting as a safety limit).",
+                  "To store the current index being checked.",
+                  "To hold the temporary value during a swap."
+                ],
+                 "answer": "To ensure the algorithm terminates even if the 'Changes' flag logic fails (acting as a safety limit)."
+             },
+            {
+                "type": "mc",
+                "question": "What kind of sort is being performed if the comparison is `IF DataArray[Index] > DataArray[Index + 1] THEN`?",
+                "options": [
+                    "Descending order sort (largest to smallest)",
+                    "Ascending order sort (smallest to largest)",
+                    "Random order sort",
+                    "Alphabetical sort"
+                ],
+                "answer": "Ascending order sort (smallest to largest)"
+            },
+            // --- Type 2: Fill-in-the-Blank ---
+            {
+                "type": "typed",
+                "question": "Complete the FOR loop statement to iterate through array indices from 0 up to, but not including, the last index (assuming LENGTH gives the total number of items).",
+                "code": "WHILE Changes = TRUE DO\n  Changes <- FALSE\n  // [TYPE YOUR ANSWER HERE]\n    IF DataArray[Index] > DataArray[Index + 1] THEN\n      // Swap\n      Changes <- TRUE\n    ENDIF\n  NEXT Index\nENDWHILE",
+                "answer": "FOR Index <- 0 TO LENGTH(DataArray) - 2" // Corrected safe upper bound
+            },
+            {
+                "type": "typed",
+                "question": "Type the line of pseudocode that correctly compares the element at the current `Index` with the next element to check if they are out of order for an ascending sort.",
+                "code": "FOR Index <- 0 TO MaxIndex - 1\n  // [TYPE YOUR ANSWER HERE]\n    // Swap elements\n    Changes <- TRUE\n  ENDIF\nNEXT Index",
+                "answer": "IF DataArray[Index] > DataArray[Index + 1] THEN"
+            },
+            {
+                "type": "typed",
+                "question": "Inside the IF block where a swap occurs, the 'Changes' flag must be set. Type the missing line.",
+                "code": "IF DataArray[Index] > DataArray[Index + 1] THEN\n  Temp <- DataArray[Index]\n  DataArray[Index] <- DataArray[Index + 1]\n  DataArray[Index + 1] <- Temp\n  // [TYPE YOUR ANSWER HERE]\nENDIF",
+                "answer": "Changes <- TRUE"
+            },
+            {
+                "type": "typed",
+                "question": "Complete the first line of the three-step swap process using a temporary variable 'Temp'.",
+                "code": "IF DataArray[Index] > DataArray[Index + 1] THEN\n  // [TYPE YOUR ANSWER HERE]\n  DataArray[Index] <- DataArray[Index + 1]\n  DataArray[Index + 1] <- Temp\n  Changes <- TRUE\nENDIF",
+                "answer": "Temp <- DataArray[Index]"
+            },
+             {
+                "type": "typed",
+                "question": "A flag-controlled bubble sort often starts by assuming changes will be needed. Before the WHILE loop, how should 'Changes' be initialized?",
+                "code": "DECLARE Changes : BOOLEAN\n// [TYPE YOUR ANSWER HERE]\nWHILE Changes = TRUE DO\n  Changes <- FALSE\n...",
+                "answer": "Changes <- TRUE"
+            },
+            // --- Type 3: Situational ---
+            {
+                "type": "mc",
+                "question": "Bubble sort is considered an inefficient algorithm for large datasets. Why?",
+                "options": [
+                    "It requires too much memory.",
+                    "It makes many comparisons and swaps, resulting in a slow O(n^2) time complexity in the average/worst case.",
+                    "It only works on numbers, not strings.",
+                    "It cannot sort data that is already partially sorted."
+                ],
+                "answer": "It makes many comparisons and swaps, resulting in a slow O(n^2) time complexity in the average/worst case."
+            },
+            {
+                "type": "mc",
+                "question": "In which situation might bubble sort be a reasonable choice?",
+                "options": [
+                    "Sorting millions of records in a database.",
+                    "Sorting a small list of items (e.g., fewer than 20) where simplicity is more important than speed.",
+                    "Sorting data in real-time as it arrives from a sensor.",
+                    "When the data is guaranteed to be in reverse order."
+                ],
+                "answer": "Sorting a small list of items (e.g., fewer than 20) where simplicity is more important than speed."
+            },
+            {
+                "type": "mc",
+                "question": "What is the best-case time complexity for bubble sort (when the data is already sorted)?",
+                "options": [
+                    "O(1) - Constant time",
+                    "O(n) - Linear time (if optimized to stop early)",
+                    "O(n log n) - Log-linear time",
+                    "O(n^2) - Quadratic time"
+                ],
+                "answer": "O(n) - Linear time (if optimized to stop early)" // The flag allows it to stop after one pass if sorted.
+            }
+        ]
+    },
+    "p2-totalling": {
+        title: "Paper 2: Totalling Algorithm",
+        chapter: "Paper 2 Practice",
+        subtitle: "Test your knowledge of the totalling algorithm.",
+        quizType: "mixed",
+        questions: [
+            // --- Type 1: Multiple Choice (Function/Role) ---
+            {
+                "type": "mc",
+                "question": "In Example 1, what is the purpose of the line 'Total <- 0'?",
+                "code": "Total <- 0 //Initialise the total variable to 0",
+                "options": [
+                    "To store the first user input.",
+                    "To set the final output value.",
+                    "To initialize the accumulator variable to zero before starting the sum.",
+                    "To define the number of times the loop will run."
+                ],
+                "answer": "To initialize the accumulator variable to zero before starting the sum."
+            },
+            {
+                "type": "mc",
+                "question": "What does the 'FOR X <- 0 TO 9' loop achieve in Example 1?",
+                "code": "FOR X <- 0 TO 9\n  Total <- Total + INPUT(\"Enter a value\")\nNEXT X",
+                "options": [
+                    "It runs exactly 9 times.",
+                    "It calculates the average of 10 numbers.",
+                    "It repeats the process of taking input and adding it to the total 10 times.",
+                    "It initializes the variable X to 9."
+                ],
+                "answer": "It repeats the process of taking input and adding it to the total 10 times."
+            },
+            {
+                "type": "mc",
+                "question": "What is the function of the line 'Total <- Total + INPUT(\"Enter a value\")' inside the loop?",
+                "code": "Total <- Total + INPUT(\"Enter a value\") //Add the input to the total",
+                "options": [
+                    "It displays the current total.",
+                    "It asks the user for a number and adds it to the running total.",
+                    "It resets the total to the user's input.",
+                    "It compares the total to the user's input."
+                ],
+                "answer": "It asks the user for a number and adds it to the running total."
+            },
+            {
+                "type": "mc",
+                "question": "In Example 2, what does 'LENGTH(DataArray)' likely represent?",
+                "code": "FOR Count <- 0 TO LENGTH(DataArray) - 1",
+                "options": [
+                    "The index of the last element in the array.",
+                    "The value of the first element in the array.",
+                    "The total number of elements in the array.",
+                    "The sum of all elements in the array."
+                ],
+                "answer": "The total number of elements in the array."
+            },
+            {
+                "type": "mc",
+                "question": "Why does the loop in Example 2 go from '0 TO LENGTH(DataArray) - 1'?",
+                "code": "FOR Count <- 0 TO LENGTH(DataArray) - 1",
+                "options": [
+                    "Because arrays always start at index 1.",
+                    "To skip the last element of the array.",
+                    "Because array indices often start at 0, so the last index is Length-1.",
+                    "To make the loop run faster."
+                ],
+                "answer": "Because array indices often start at 0, so the last index is Length-1."
+            },
+            {
+                "type": "mc",
+                "question": "What is the role of the line 'TotalValue <- TotalValue + DataArray[Count]'?",
+                "code": "TotalValue <- TotalValue + DataArray[Count] //Add the input to the total",
+                "options": [
+                    "It stores the current index in TotalValue.",
+                    "It adds the value of the current array element to the running total.",
+                    "It replaces TotalValue with the value of the current array element.",
+                    "It checks if the current element is greater than TotalValue."
+                ],
+                "answer": "It adds the value of the current array element to the running total."
+            },
+            {
+                "type": "mc",
+                "question": "What is the general name for a variable like 'Total' or 'TotalValue' used to accumulate a sum?",
+                "options": [
+                    "Counter",
+                    "Index",
+                    "Accumulator",
+                    "Flag"
+                ],
+                "answer": "Accumulator"
+            },
+             {
+                "type": "mc",
+                "question": "What is essential to do before starting any totalling loop?",
+                 "options": [
+                    "Initialize the total variable (accumulator) to zero.",
+                    "Set the loop counter to its maximum value.",
+                    "Input the first value.",
+                    "Check if the array is sorted."
+                ],
+                "answer": "Initialize the total variable (accumulator) to zero."
+            },
+             {
+                "type": "mc",
+                "question": "In Example 2, what does `DataArray[Count]` access?",
+                 "options": [
+                    "The number of elements in the array.",
+                    "The value stored at the index specified by the `Count` variable.",
+                    "The current value of the `TotalValue`.",
+                    "The next available memory address."
+                ],
+                "answer": "The value stored at the index specified by the `Count` variable."
+            },
+            {
+                "type": "mc",
+                "question": "What is the purpose of the 'OUTPUT Total' line at the end of both examples?",
+                "options": [
+                    "To start the calculation.",
+                    "To check for errors.",
+                    "To display the final calculated sum.",
+                    "To reset the total for the next run."
+                ],
+                "answer": "To display the final calculated sum."
+            },
+            // --- Type 2: Fill-in-the-Blank ---
+            {
+                "type": "typed",
+                "question": "This pseudocode sums numbers input by a user until they enter -1. Type the line that initializes the total.",
+                "code": "1 DECLARE Total, UserValue: INTEGER\n2 // [TYPE YOUR ANSWER HERE]\n3 INPUT UserValue\n4 WHILE UserValue <> -1\n5   Total <- Total + UserValue\n6   INPUT UserValue\n7 ENDWHILE\n8 OUTPUT Total",
+                "answer": "Total <- 0"
+            },
+            {
+                "type": "typed",
+                "question": "Complete the line inside the loop that adds the current array element (`Values[Index]`) to the running `Sum`.",
+                "code": "Sum <- 0\nFOR Index <- 1 TO 100\n  // [TYPE YOUR ANSWER HERE]\nNEXT Index\nOUTPUT Sum",
+                "answer": "Sum <- Sum + Values[Index]"
+            },
+            {
+                "type": "typed",
+                "question": "This code sums the elements of a 2D array. Complete the inner loop line that adds the element to `GridTotal`.",
+                "code": "GridTotal <- 0\nFOR Row <- 0 TO 4\n  FOR Col <- 0 TO 4\n    // [TYPE YOUR ANSWER HERE]\n  NEXT Col\nNEXT Row\nOUTPUT GridTotal",
+                "answer": "GridTotal <- GridTotal + Grid[Row, Col]"
+            },
+             {
+                "type": "typed",
+                "question": "Type the line needed before a FOR loop that sums array elements, initializing the `RunningTotal` variable.",
+                "code": "DECLARE MyArray : ARRAY[0:49] OF REAL\nDECLARE RunningTotal : REAL\nDECLARE i : INTEGER\n// [TYPE YOUR ANSWER HERE]\nFOR i <- 0 TO 49\n  RunningTotal <- RunningTotal + MyArray[i]\nNEXT i",
+                "answer": "RunningTotal <- 0.0" // Or just 0, depending on strictness
+            },
+             {
+                "type": "typed",
+                "question": "Complete the FOR loop header to iterate through an array `Sales` with indices from 1 to 50.",
+                "code": "TotalSales <- 0.0\n// [TYPE YOUR ANSWER HERE]\n  TotalSales <- TotalSales + Sales[Day]\nNEXT Day\nOUTPUT TotalSales",
+                "answer": "FOR Day <- 1 TO 50"
+            },
+             {
+                "type": "typed",
+                "question": "In Example 1, type the line that gets input from the user and adds it to the total in a single step.",
+                 "code": "Total <- 0\nFOR X <- 0 TO 9\n  // [TYPE YOUR ANSWER HERE]\nNEXT X\nOUTPUT Total",
+                 "answer": "Total <- Total + INPUT(\"Enter a value\")"
+            },
+             {
+                "type": "typed",
+                "question": "Type the final line of pseudocode required to display the calculated `Sum` after the loop finishes.",
+                 "code": "Sum <- 0\nFOR i <- 1 TO N\n  Sum <- Sum + Scores[i]\nNEXT i\n// [TYPE YOUR ANSWER HERE]",
+                 "answer": "OUTPUT Sum"
+            },
+            // --- Type 3: Situational ---
+            {
+                "type": "mc",
+                "question": "In which of these scenarios would a totalling algorithm be most directly useful?",
+                "options": [
+                    "Finding the highest score in a list of exam results.",
+                    "Calculating the total sales revenue for a shop over a week.",
+                    "Sorting customer names into alphabetical order.",
+                    "Checking if a specific product ID exists in inventory."
+                ],
+                "answer": "Calculating the total sales revenue for a shop over a week."
+            },
+            {
+                "type": "mc",
+                "question": "A program needs to calculate the sum of prices for items in a shopping basket. What core algorithmic pattern does this require?",
+                "options": [
+                    "Searching",
+                    "Sorting",
+                    "Counting",
+                    "Totalling"
+                ],
+                "answer": "Totalling"
+            },
+            {
+                "type": "mc",
+                "question": "A game keeps track of a player's score by adding points for various actions. The part of the code that adds the points to the player's overall score is an example of:",
+                "options": [
+                    "Input validation",
+                    "Totalling",
+                    "Finding the minimum",
+                    "Linear search"
+                ],
+                "answer": "Totalling"
+            }
+        ]
+    },
+    "p2-min-max": {
+        title: "Paper 2: Finding Minimum and Maximum",
+        chapter: "Paper 2 Practice",
+        subtitle: "Test your knowledge of finding min/max values.",
+        quizType: "mixed",
+        questions: [
+            // --- Min/Max - Type 1: Multiple Choice (Function/Role) ---
+            {
+                "type": "mc",
+                "question": "In the 'Find Smallest' Example 1, why is 'Minimum' initialized to a large value (9999)?",
+                "code": "Minimum <- 9999 //initialise minimum to large value",
+                "options": [
+                    "To ensure the first valid user input will be smaller and become the initial minimum.",
+                    "To set the maximum possible value the user can enter.",
+                    "To count how many numbers are entered.",
+                    "To store the final result."
+                ],
+                "answer": "To ensure the first valid user input will be smaller and become the initial minimum."
+            },
+            {
+                "type": "mc",
+                "question": "In the 'Find Largest' Example 1, why is 'Maximum' initialized to a small value (-9999)?",
+                "code": "Maximum <- -9999 //initialise maximum to small value",
+                "options": [
+                    "To count the numbers entered.",
+                    "To ensure the first valid user input will be larger and become the initial maximum.",
+                    "To set the minimum possible value the user can enter.",
+                    "This is the final value that will be output."
+                ],
+                "answer": "To ensure the first valid user input will be larger and become the initial maximum."
+            },
+            {
+                "type": "mc",
+                "question": "What is the purpose of the condition 'IF Number < Minimum THEN' in 'Find Smallest' Example 1?",
+                "code": "IF Number < Minimum THEN // check if the number entered is smaller than the current minimum",
+                "options": [
+                    "To check if the number is the sentinel value.",
+                    "To compare the newly input number with the smallest number found so far.",
+                    "To count the number of inputs.",
+                    "To initialize the Minimum variable."
+                ],
+                "answer": "To compare the newly input number with the smallest number found so far."
+            },
+            {
+                "type": "mc",
+                "question": "What does the line 'Maximum <- Number' do inside the IF statement in 'Find Largest' Example 1?",
+                "code": "IF Number > Maximum THEN\n  Maximum <- Number //if true then make maximum because the number\nENDIF",
+                "options": [
+                    "It ends the loop.",
+                    "It resets Maximum to -9999.",
+                    "It updates 'Maximum' to the new larger value that was just input.",
+                    "It outputs the current maximum."
+                ],
+                "answer": "It updates 'Maximum' to the new larger value that was just input."
+            },
+            {
+                "type": "mc",
+                "question": "In 'Find Smallest' Example 2, why does the loop 'FOR X <- 0 TO LENGTH(NumberArray)' iterate through the array?",
+                "code": "FOR X <- 0 TO LENGTH(NumberArray)\n  IF NumberArray[X] < Minimum THEN\n    Minimum <- NumberArray[X]\n  ENDIF\nNEXT X",
+                "options": [
+                    "To initialize the Minimum value.",
+                    "To count the number of elements.",
+                    "To access each element of the array for comparison.",
+                    "To sort the array."
+                ],
+                "answer": "To access each element of the array for comparison."
+            },
+            {
+                "type": "mc",
+                "question": "What is the role of the line 'Minimum <- NumberArray[X]' in 'Find Smallest' Example 2?",
+                "code": "IF NumberArray[X] < Minimum THEN\n  Minimum <- NumberArray[X]\nENDIF",
+                "options": [
+                    "It increments the loop counter X.",
+                    "It updates the 'Minimum' variable if a smaller element is found in the array.",
+                    "It checks if the loop should continue.",
+                    "It initializes the Minimum variable."
+                ],
+                "answer": "It updates the 'Minimum' variable if a smaller element is found in the array."
+            },
+            {
+                 "type": "mc",
+                 "question": "A common alternative way to initialize 'Minimum' when searching an array (Example 2) is to:",
+                 "options": [
+                     "Set Minimum to 0.",
+                     "Set Minimum to the value of the *first* element in the array.",
+                     "Set Minimum to -1.",
+                     "Leave Minimum uninitialized."
+                 ],
+                 "answer": "Set Minimum to the value of the *first* element in the array."
+             },
+             {
+                 "type": "mc",
+                 "question": "Similarly, a common alternative way to initialize 'Maximum' when searching an array (Example 2) is to:",
+                 "options": [
+                     "Set Maximum to 9999.",
+                     "Set Maximum to 0.",
+                     "Set Maximum to the value of the *first* element in the array.",
+                     "Set Maximum to -1."
+                 ],
+                 "answer": "Set Maximum to the value of the *first* element in the array."
+             },
+            {
+                "type": "mc",
+                "question": "If finding the minimum in an array `Scores` indexed from 1 to 10, how should the loop be written?",
+                "options": [
+                    "FOR i <- 0 TO 9",
+                    "FOR i <- 1 TO 10",
+                    "FOR i <- 0 TO 10",
+                    "WHILE i < 10"
+                ],
+                "answer": "FOR i <- 1 TO 10"
+            },
+             {
+                 "type": "mc",
+                 "question": "What is the purpose of the sentinel value (0) in Example 1 for both min and max finding?",
+                 "code": "WHILE Number >= 1 DO //loop until the user enters 0\n  Number <- INPUT(\"Enter a number or 0 to stop\")",
+                 "options": [
+                     "It's the value being searched for.",
+                     "It's used to initialize the min/max variable.",
+                     "It's a special value used to signal the end of user input.",
+                     "It's added to the min/max value."
+                 ],
+                 "answer": "It's a special value used to signal the end of user input."
+             },
+            // --- Min/Max - Type 2: Fill-in-the-Blank ---
+            {
+                "type": "typed",
+                "question": "To find the maximum value in an array `Data` indexed 0 to N-1, initialize `MaxValue` before the loop. Type the initialization line assuming the first element is used.",
+                "code": "DECLARE Data : ARRAY[0:N-1] OF INTEGER\nDECLARE MaxValue : INTEGER\nDECLARE i : INTEGER\n// [TYPE YOUR ANSWER HERE]\nFOR i <- 1 TO N-1\n...",
+                "answer": "MaxValue <- Data[0]"
+            },
+            {
+                "type": "typed",
+                "question": "Complete the IF condition to check if the current array element `Values[i]` is greater than the current `Maximum`.",
+                "code": "Maximum <- Values[0]\nFOR i <- 1 TO LENGTH(Values)-1\n  // [TYPE YOUR ANSWER HERE]\n    Maximum <- Values[i]\n  ENDIF\nNEXT i",
+                "answer": "IF Values[i] > Maximum THEN"
+            },
+            {
+                "type": "typed",
+                "question": "If a new minimum is found (i.e., `CurrentValue < MinSoFar`), type the line that updates `MinSoFar`.",
+                "code": "IF CurrentValue < MinSoFar THEN\n  // [TYPE YOUR ANSWER HERE]\nENDIF",
+                "answer": "MinSoFar <- CurrentValue"
+            },
+            {
+                "type": "typed",
+                "question": "To find the smallest number from user input until 0 is entered, initialize `Minimum` to a very large number. Type the initialization.",
+                "code": "// [TYPE YOUR ANSWER HERE]\nNumber <- 1\nWHILE Number <> 0 DO\n...",
+                "answer": "Minimum <- 9999" // Or any suitably large number
+            },
+            {
+                "type": "typed",
+                "question": "Complete the loop header to iterate through `Temperatures` array (indices 1 to 30) to find the maximum.",
+                "code": "MaxTemp <- Temperatures[1]\n// [TYPE YOUR ANSWER HERE]\n  IF Temperatures[Day] > MaxTemp THEN\n    MaxTemp <- Temperatures[Day]\n  ENDIF\nNEXT Day",
+                "answer": "FOR Day <- 2 TO 30" // Start from 2 since index 1 is initial max
+            },
+             {
+                 "type": "typed",
+                 "question": "Type the final line required to display the `Smallest` value found after the loop finishes.",
+                 "code": "... ENDWHILE // Loop finishes\n// [TYPE YOUR ANSWER HERE]",
+                 "answer": "OUTPUT Smallest"
+             },
+            // --- Min/Max - Type 3: Situational ---
+            {
+                "type": "mc",
+                "question": "A teacher needs to find the highest score achieved by any student on a recent test. Which algorithm pattern is most appropriate?",
+                "options": [
+                    "Linear Search",
+                    "Counting Occurrences",
+                    "Finding the Maximum",
+                    "Calculating the Average"
+                ],
+                "answer": "Finding the Maximum"
+            },
+            {
+                "type": "mc",
+                "question": "A weather station records hourly temperatures. To identify the coldest temperature recorded during the day, which algorithm is needed?",
+                "options": [
+                    "Finding the Minimum",
+                    "Bubble Sort",
+                    "Totalling",
+                    "Input Validation"
+                ],
+                "answer": "Finding the Minimum"
+            },
+            {
+                "type": "mc",
+                "question": "When would initializing Minimum/Maximum to the first element of an array be better than using a very large/small number?",
+                "options": [
+                    "When the array might contain very large or very small numbers outside the assumed range.",
+                    "When the array is guaranteed to be empty.",
+                    "When the array is already sorted.",
+                    "When using user input instead of an array."
+                ],
+                "answer": "When the array might contain very large or very small numbers outside the assumed range."
+            },
+             {
+                "type": "mc",
+                "question": "Finding the minimum or maximum value requires iterating through:",
+                "options": [
+                    "Only the first and last elements.",
+                    "Only the elements greater than zero.",
+                    "All the elements that need to be considered.",
+                    "Only half of the elements."
+                ],
+                "answer": "All the elements that need to be considered."
+            }
+        ]
+    },
+
+    // --- ADD THE NEW AVERAGE QUIZ BELOW ---
+    "p2-average": {
+        title: "Paper 2: Finding the Average",
+        chapter: "Paper 2 Practice",
+        subtitle: "Test your knowledge of calculating averages.",
+        quizType: "mixed",
+        questions: [
+            // --- Average - Type 1: Multiple Choice (Function/Role) ---
+            {
+                "type": "mc",
+                "question": "In the 'Average' Example 1, why are both 'Count' and 'Total' initialized to 0?",
+                "code": "Count <- 0 //initialise the count to 0\nTotal <- 0 //initialise the total to 0",
+                "options": [
+                    "To store the first number entered.",
+                    "These are the final values to be output.",
+                    "To ensure the count and sum start correctly before processing inputs.",
+                    "To set the maximum number of inputs allowed."
+                ],
+                "answer": "To ensure the count and sum start correctly before processing inputs."
+            },
+            {
+                "type": "mc",
+                "question": "What is the purpose of the line 'Total <- Total + Number' inside the WHILE loop?",
+                "code": "Total <- Total + Number //add the number entered to the total",
+                "options": [
+                    "It counts how many numbers have been entered.",
+                    "It adds the most recently entered number to the running sum.",
+                    "It checks if the number is the sentinel value (0).",
+                    "It calculates the average."
+                ],
+                "answer": "It adds the most recently entered number to the running sum."
+            },
+            {
+                "type": "mc",
+                "question": "What is the role of the line 'Count <- Count + 1' inside the WHILE loop?",
+                "code": "Count <- Count + 1 //add 1 to the count",
+                "options": [
+                    "It adds the input number to the count.",
+                    "It calculates the final average.",
+                    "It increments the counter each time a valid number is entered.",
+                    "It initializes the count variable."
+                ],
+                "answer": "It increments the counter each time a valid number is entered."
+            },
+            {
+                "type": "mc",
+                "question": "In 'Average' Example 2, what does the line 'Total <- Total + NumberArray[X]' achieve?",
+                "code": "Total <- Total + NumberArray[X] //add value to total",
+                "options": [
+                    "It adds the current index 'X' to the total.",
+                    "It adds the value of the element at index 'X' to the running total.",
+                    "It resets the total to the value of the element at index 'X'.",
+                    "It compares the total to the element at index 'X'."
+                ],
+                "answer": "It adds the value of the element at index 'X' to the running total."
+            },
+            {
+                "type": "mc",
+                "question": "What two values are essential for calculating an average after processing all the numbers?",
+                "options": [
+                    "The first number and the last number.",
+                    "The smallest number and the largest number.",
+                    "The total sum and the count of numbers.",
+                    "The loop counter and the array length."
+                ],
+                "answer": "The total sum and the count of numbers."
+            },
+            {
+                "type": "mc",
+                "question": "If the user immediately enters 0 in Example 1, what would the values of 'Total' and 'Count' be after the loop?",
+                "code": "Count <- 0\nTotal <- 0\nNumber <- 1\nWHILE Number >= 1 DO\n  Number <- INPUT(\"Enter a number or 0 to stop\")\n  Total <- Total + Number\n  Count <- Count + 1\nENDWHILE",
+                "options": [
+                    "Total=0, Count=0",
+                    "Total=0, Count=1",
+                    "Total=1, Count=1",
+                    "Undefined (Error)"
+                ],
+                "answer": "Total=0, Count=1" // Note: The code adds 0 and increments count once before stopping.
+            },
+             {
+                "type": "mc",
+                "question": "To calculate the average correctly after the loop in Example 1, what calculation is needed?",
+                "options": [
+                    "OUTPUT Total",
+                    "OUTPUT Count",
+                    "OUTPUT Total / Count",
+                    "OUTPUT Total * Count"
+                ],
+                "answer": "OUTPUT Total / Count"
+            },
+            {
+                 "type": "mc",
+                 "question": "In Example 2, how is the number of elements determined for the average calculation?",
+                 "options": [
+                     "By the final value of the loop counter 'X'.",
+                     "By using `LENGTH(NumberArray)`.",
+                     "By the value stored in 'Count'.",
+                     "It's always assumed to be 100."
+                 ],
+                 "answer": "By the value stored in 'Count'." // Or LENGTH(NumberArray) if the loop runs fully
+             },
+             {
+                "type": "mc",
+                "question": "If the array `NumberArray` in Example 2 is empty, what potential problem could occur when calculating the average?",
+                "options": [
+                    "The loop will run infinitely.",
+                    "The total will be incorrect.",
+                    "Division by zero if `Count` remains 0.",
+                    "The array length cannot be determined."
+                ],
+                "answer": "Division by zero if `Count` remains 0."
+            },
+            {
+                "type": "mc",
+                "question": "What data type should the 'Average' variable typically be declared as?",
+                "options": [
+                    "INTEGER",
+                    "CHAR",
+                    "BOOLEAN",
+                    "REAL" // Or FLOAT/DOUBLE
+                ],
+                "answer": "REAL"
+            },
+            // --- Average - Type 2: Fill-in-the-Blank ---
+            {
+                "type": "typed",
+                "question": "Before calculating the average from user input (until -1 is entered), both `Sum` and `Counter` must be initialized. Type the line to initialize `Counter`.",
+                "code": "DECLARE Sum, Counter, Value: INTEGER\nSum <- 0\n// [TYPE YOUR ANSWER HERE]\nINPUT Value\nWHILE Value <> -1 DO\n...",
+                "answer": "Counter <- 0"
+            },
+            {
+                "type": "typed",
+                "question": "Inside a loop summing array elements (`Scores[i]`) for an average, you need to add to the `TotalScore` and increment the `NumScores` counter. Type the line that increments the counter.",
+                "code": "FOR i <- 0 TO MaxIndex\n  TotalScore <- TotalScore + Scores[i]\n  // [TYPE YOUR ANSWER HERE]\nNEXT i",
+                "answer": "NumScores <- NumScores + 1"
+            },
+            {
+                "type": "typed",
+                "question": "After the loop finishes, you have `FinalTotal` and `NumberOfItems`. Type the line that calculates the `AverageValue`.",
+                "code": "// Loop has finished\nDECLARE AverageValue : REAL\n// [TYPE YOUR ANSWER HERE]\nOUTPUT AverageValue",
+                "answer": "AverageValue <- FinalTotal / NumberOfItems"
+            },
+            {
+                "type": "typed",
+                "question": "Complete the WHILE loop condition to keep taking numbers until the user enters 0.",
+                "code": "Number <- INPUT(\"Enter first number (0 to stop)\")\n// [TYPE YOUR ANSWER HERE]\n  Total <- Total + Number\n  Count <- Count + 1\n  Number <- INPUT(\"Enter next number (0 to stop)\")\nENDWHILE",
+                "answer": "WHILE Number <> 0 DO"
+            },
+            {
+                "type": "typed",
+                "question": "Type the line inside the FOR loop (Example 2) that adds the current array element to the `Total`.",
+                "code": "Total <- 0\nCount <- 0\nFOR X <- 0 TO LENGTH(NumberArray) - 1\n  // [TYPE YOUR ANSWER HERE]\n  Count <- Count + 1\nNEXT X",
+                "answer": "Total <- Total + NumberArray[X]"
+            },
+            {
+                "type": "typed",
+                "question": "Initialize both `TotalMarks` and `StudentCount` to zero before processing student marks.",
+                "code": "// [TYPE YOUR ANSWER HERE]\n// [TYPE YOUR ANSWER HERE]\nFOR i <- 1 TO NumStudents\n...",
+                "answer": "TotalMarks <- 0\nStudentCount <- 0" // Or separate lines
+            },
+            // --- Average - Type 3: Situational ---
+            {
+                "type": "mc",
+                "question": "A teacher wants to calculate the average score for their class on a test. Which two main steps does the algorithm involve?",
+                "options": [
+                    "Finding the highest score and lowest score.",
+                    "Sorting the scores and finding the middle value.",
+                    "Totalling all the scores and counting how many scores there are.",
+                    "Searching for a specific score and counting duplicates."
+                ],
+                "answer": "Totalling all the scores and counting how many scores there are."
+            },
+            {
+                "type": "mc",
+                "question": "Calculating the average temperature over a 24-hour period requires:",
+                "options": [
+                    "Finding the maximum temperature.",
+                    "Summing the hourly temperatures and dividing by 24.",
+                    "Sorting the temperatures.",
+                    "Checking if any temperature was below freezing."
+                ],
+                "answer": "Summing the hourly temperatures and dividing by 24."
+            },
+            {
+                "type": "mc",
+                "question": "Why is it important to handle the case where the count of numbers might be zero when calculating an average?",
+                "options": [
+                    "To prevent division by zero, which causes an error.",
+                    "To make the calculation faster.",
+                    "Because the total is always zero in that case.",
+                    "To ensure the average is always an integer."
+                ],
+                "answer": "To prevent division by zero, which causes an error."
+            },
+             {
+                "type": "mc",
+                "question": "Which two algorithms are often combined to calculate an average?",
+                "options": [
+                    "Search and Sort",
+                    "Min and Max",
+                    "Totalling and Counting",
+                    "Validation and Verification"
+                ],
+                "answer": "Totalling and Counting"
+            }
+        ]
+    },
+    "p2-validation": {
+        title: "Paper 2: Input Validation",
+        chapter: "Paper 2 Practice",
+        subtitle: "Test your knowledge of input validation techniques.",
+        quizType: "mixed",
+        questions: [
+        // --- Range Check ---
+        {
+            "type": "mc",
+            "question": "What is the purpose of the WHILE loop in the Range Check example?",
+            "code": "Number <- INPUT(\"Enter a number between 1 and 10\")\nWHILE Number < 1 OR Number > 10 DO\n  OUTPUT(\"Invalid please try again\")\n  Number <- INPUT()\nENDWHILE",
+            "options": [
+                "To ensure the user enters exactly 10 numbers.",
+                "To repeat the input process until a number within the valid range (1-10) is entered.",
+                "To calculate the sum of the numbers.",
+                "To check if the input is a number."
+            ],
+            "answer": "To repeat the input process until a number within the valid range (1-10) is entered."
+        },
+        {
+            "type": "typed",
+            "question": "Complete the WHILE loop condition to check if an entered 'Score' is outside the valid range of 0 to 100 (inclusive).",
+            "code": "INPUT Score\n// [TYPE YOUR ANSWER HERE]\n  OUTPUT \"Invalid score. Please enter between 0 and 100.\"\n  INPUT Score\nENDWHILE",
+            "answer": "WHILE Score < 0 OR Score > 100 DO"
+        },
+        {
+            "type": "mc",
+            "question": "A program asks for a month number (1-12). Which condition correctly validates this input?",
+            "options": [
+                "WHILE Month < 1 AND Month > 12 DO",
+                "WHILE Month > 1 OR Month < 12 DO",
+                "WHILE Month < 1 OR Month > 12 DO",
+                "WHILE Month >= 1 AND Month <= 12 DO"
+            ],
+            "answer": "WHILE Month < 1 OR Month > 12 DO"
+        },
+        // --- Length Check ---
+        {
+            "type": "mc",
+            "question": "In the Length Check example, what does 'LENGTH(Data)' function do?",
+            "code": "WHILE LENGTH(Data) < 10 DO",
+            "options": [
+                "Checks if the data is numeric.",
+                "Returns the number of characters in the string 'Data'.",
+                "Checks if the data is greater than 10.",
+                "Converts the data to a string."
+            ],
+            "answer": "Returns the number of characters in the string 'Data'."
+        },
+        {
+            "type": "typed",
+            "question": "Type the WHILE loop condition to ensure a 'Password' string has a length of exactly 8 characters.",
+            "code": "INPUT Password\n// [TYPE YOUR ANSWER HERE]\n  OUTPUT \"Password must be 8 characters long.\"\n  INPUT Password\nENDWHILE",
+            "answer": "WHILE LENGTH(Password) <> 8 DO"
+        },
+        {
+            "type": "mc",
+            "question": "A user needs to enter a phone number which must be at least 10 digits long. Which condition checks this?",
+            "options": [
+                "WHILE LENGTH(PhoneNumber) > 10 DO",
+                "WHILE LENGTH(PhoneNumber) <= 10 DO",
+                "WHILE LENGTH(PhoneNumber) < 10 DO",
+                "WHILE LENGTH(PhoneNumber) = 10 DO"
+            ],
+            "answer": "WHILE LENGTH(PhoneNumber) < 10 DO"
+        },
+        // --- Type Check ---
+        {
+            "type": "mc",
+            "question": "The Type Check example loops while 'Data.IsString = FALSE'. What does this condition verify?",
+            "code": "WHILE Data.IsString = FALSE DO",
+            "options": [
+                "That the data entered is empty.",
+                "That the data entered is a number.",
+                "That the data entered is NOT a string.",
+                "That the data entered has the correct length."
+            ],
+            "answer": "That the data entered is NOT a string."
+        },
+        {
+            "type": "typed",
+            "question": "Complete the WHILE loop condition to ensure the user input 'Age' is an integer.",
+            "code": "INPUT Age\n// [TYPE YOUR ANSWER HERE]\n  OUTPUT \"Invalid input. Please enter a whole number for age.\"\n  INPUT Age\nENDWHILE",
+            "answer": "WHILE Age.IsInteger = FALSE DO" // Assuming an IsInteger function/property
+        },
+         {
+            "type": "mc",
+            "question": "Which validation check is used to ensure that a user enters numerical data when asked for their age?",
+            "options": ["Length Check", "Range Check", "Type Check", "Presence Check"],
+            "answer": "Type Check"
+        },
+        // --- Presence Check ---
+        {
+            "type": "mc",
+            "question": "The Presence Check example uses 'IF Data = NULL THEN'. What is this checking for?",
+            "code": "INPUT Data\nIF Data = NULL THEN //check if the data entered is null\n  OUTPUT(\"Invalid\")\nENDIF",
+            "options": [
+                "If the data is too long.",
+                "If the data is of the wrong type.",
+                "If the user entered nothing (no data was provided).",
+                "If the data is outside a specific range."
+            ],
+            "answer": "If the user entered nothing (no data was provided)."
+        },
+        {
+            "type": "typed",
+            "question": "Complete the WHILE loop condition to repeatedly ask for input if the entered 'Name' is an empty string.",
+            "code": "INPUT Name\n// [TYPE YOUR ANSWER HERE]\n  OUTPUT \"Name cannot be empty. Please try again.\"\n  INPUT Name\nENDWHILE",
+            "answer": "WHILE Name = \"\" DO" // Checking for empty string "" is common for presence
+        },
+        // --- Format Check ---
+        {
+            "type": "mc",
+            "question": "The Format Check example validates a date format (DD/MM/YYYY). What does `SUBSTRING(Date, 0, 2).IsNumeric = FALSE` check?",
+            "code": "WHILE (SUBSTRING(Date, 0, 2).IsNumeric = FALSE OR //2 numbers\n...",
+            "options": [
+                "If the first slash is missing.",
+                "If the month part contains non-numeric characters.",
+                "If the day part (first two characters) contains non-numeric characters.",
+                "If the year part has fewer than 4 digits."
+            ],
+            "answer": "If the day part (first two characters) contains non-numeric characters."
+        },
+         {
+            "type": "typed",
+            "question": "A program expects an email address. Type a simple condition that checks if the input string 'Email' contains the '@' symbol.",
+            "code": "INPUT Email\nValid <- FALSE\n// [TYPE A SIMPLE CHECK HERE, not a full validation loop]\nIF Valid = FALSE THEN OUTPUT \"Invalid format\"",
+            "answer": "IF \"@\" IN Email THEN Valid <- TRUE" // Simplified check, presence of @
+        },
+        {
+            "type": "mc",
+            "question": "Validating that a postcode follows a specific pattern like 'LLNN NLL' (L=Letter, N=Number) is an example of:",
+            "options": ["Range Check", "Type Check", "Format Check", "Presence Check"],
+            "answer": "Format Check"
+        },
+        // --- Check Digit ---
+        {
+            "type": "mc",
+            "question": "What is the primary purpose of a check digit (e.g., in a barcode or ISBN)?",
+            "options": [
+                "To encrypt the number.",
+                "To make the number shorter.",
+                "To detect errors caused by incorrect data entry (e.g., typing digits in the wrong order).",
+                "To identify the country of origin."
+            ],
+            "answer": "To detect errors caused by incorrect data entry (e.g., typing digits in the wrong order)."
+        },
+        {
+            "type": "mc",
+            "question": "Which type of data entry error is a check digit specifically designed to catch?",
+            "options": [
+                "Entering text instead of numbers.",
+                "Leaving the field completely blank.",
+                "Swapping two adjacent digits (transposition error).",
+                "Entering a number outside the allowed range."
+            ],
+            "answer": "Swapping two adjacent digits (transposition error)."
+        },
+        // --- Verification ---
+        {
+            "type": "mc",
+            "question": "Requiring a user to enter their new password twice is an example of which data accuracy check?",
+            "options": [
+                "Range check",
+                "Length check",
+                "Double entry check (Verification)",
+                "Format check"
+            ],
+            "answer": "Double entry check (Verification)"
+        },
+        {
+            "type": "mc",
+            "question": "Before submitting an online form, the user is shown a summary of their entered details and asked to confirm they are correct. This is an example of:",
+            "options": [
+                "Validation",
+                "Visual check (Verification)",
+                "Check digit calculation",
+                "Type check"
+            ],
+            "answer": "Visual check (Verification)"
+        },
+        {
+            "type": "mc",
+            "question": "What is the key difference between Validation and Verification?",
+            "options": [
+                "Validation checks if data meets certain rules; Verification checks if the data entered matches the original source.",
+                "Validation is done by the user; Verification is done by the computer.",
+                "Validation corrects errors automatically; Verification only detects them.",
+                "There is no difference."
+            ],
+            "answer": "Validation checks if data meets certain rules; Verification checks if the data entered matches the original source."
+        },
+        {
+            "type": "mc",
+            "question": "A data entry clerk types customer details from a paper form into a computer system. To ensure accuracy, another clerk types the same details again, and the system compares the two entries. This is:",
+            "options": [
+                "Format Check",
+                "Double Entry Check",
+                "Presence Check",
+                "Range Check"
+            ],
+            "answer": "Double Entry Check"
+        }
+    ]
+}
+}
