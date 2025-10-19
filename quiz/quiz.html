@@ -86,75 +86,88 @@
     }
 
     // --- ⭐ UPDATED: buildQuiz Function ---
-    function buildQuiz() {
-        quizContainer.innerHTML = ''; // Clear previous content
-        // Shuffle questions only if you want the overall question order randomized
-        // const shuffledQuestions = shuffleArray([...questions]);
-        // questions.forEach((currentQuestion, questionNumber) => { // Use this if NOT shuffling questions
+function buildQuiz() {
+    quizContainer.innerHTML = ''; // Clear previous content
+    
+    questions.forEach((currentQuestion, questionNumber) => { // Iterate through questions
+        const questionDiv = document.createElement('div');
+        questionDiv.id = `q-${questionNumber}`; // Unique ID for the question block
+        questionDiv.className = 'question-block mb-8 p-4 border rounded-lg bg-white shadow-sm'; // Added some styling
 
-        questions.forEach((currentQuestion, questionNumber) => { // Iterate through questions
-            const questionDiv = document.createElement('div');
-            questionDiv.id = `q-${questionNumber}`; // Unique ID for the question block
-            questionDiv.className = 'question-block mb-8 p-4 border rounded-lg bg-white shadow-sm'; // Added some styling
+        // Display code block if present
+        if (currentQuestion.code) {
+            const codeBlock = document.createElement('pre');
+            codeBlock.className = 'bg-gray-800 text-white p-4 rounded-lg mb-4 font-mono text-sm overflow-x-auto';
+            const codeElement = document.createElement('code');
+            codeElement.innerText = currentQuestion.code;
+            codeBlock.appendChild(codeElement);
+            questionDiv.appendChild(codeBlock);
+        }
 
-            // Display code block if present
-            if (currentQuestion.code) {
-                const codeBlock = document.createElement('pre');
-                codeBlock.className = 'bg-gray-800 text-white p-4 rounded-lg mb-4 font-mono text-sm overflow-x-auto';
-                const codeElement = document.createElement('code');
-                codeElement.innerText = currentQuestion.code;
-                codeBlock.appendChild(codeElement);
-                questionDiv.appendChild(codeBlock);
-            }
+        // Display the question text
+        const questionTitleEl = document.createElement('h2');
+        questionTitleEl.className = 'text-lg font-semibold mb-4';
+        questionTitleEl.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
+        questionDiv.appendChild(questionTitleEl);
 
-            // Display the question text
-            const questionTitleEl = document.createElement('h2');
-            questionTitleEl.className = 'text-lg font-semibold mb-4';
-            questionTitleEl.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
-            questionDiv.appendChild(questionTitleEl);
+        // --- Logic to create MC or Typed Input ---
+        if (currentQuestion.type === "typed") {
+            // Generate Typed Input Elements using createElement (More Robust)
+            const answerContainer = document.createElement('div');
+            answerContainer.className = 'mt-4 flex flex-col sm:flex-row items-stretch gap-2';
 
-            // --- Logic to create MC or Typed Input ---
-            if (currentQuestion.type === "typed") {
-                // Generate Typed Input Elements
-                const answerContainer = document.createElement('div');
-                answerContainer.className = 'mt-4 flex flex-col sm:flex-row items-stretch gap-2';
-                answerContainer.innerHTML = `
-                    <input type="text" id="input-${questionNumber}" class="flex-grow font-mono text-sm p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Type the pseudocode line here...">
-                    <button id="btn-${questionNumber}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-lg">Check Answer</button>
-                `;
-                const feedbackEl = document.createElement('p');
-                feedbackEl.id = `feedback-${questionNumber}`;
-                feedbackEl.className = 'mt-2 text-sm font-semibold min-h-[20px]'; // Reserve space
+            // Create Input Element
+            const inputEl = document.createElement('input');
+            inputEl.type = 'text';
+            inputEl.id = `input-${questionNumber}`;
+            inputEl.className = 'flex-grow font-mono text-sm p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400';
+            inputEl.placeholder = 'Type the pseudocode line here...';
 
-                questionDiv.appendChild(answerContainer);
-                questionDiv.appendChild(feedbackEl);
+            // Create Button Element
+            const buttonEl = document.createElement('button');
+            buttonEl.id = `btn-${questionNumber}`;
+            buttonEl.className = 'bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-lg';
+            buttonEl.textContent = 'Check Answer';
 
-                // Add event listener to the check button
-                document.getElementById(`btn-${questionNumber}`).addEventListener('click', () => {
-                    checkTypedAnswer(questionNumber);
-                });
+            // Create Feedback Element
+            const feedbackEl = document.createElement('p');
+            feedbackEl.id = `feedback-${questionNumber}`;
+            feedbackEl.className = 'mt-2 text-sm font-semibold min-h-[20px]'; // Reserve space
 
-            } else { // Default to Multiple Choice if type is "mc" or undefined
-                // Generate Multiple Choice Buttons
-                const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
-                const shuffledOptions = shuffleArray([...currentQuestion.options]); // Shuffle options
+            // Append elements to the container
+            answerContainer.appendChild(inputEl);
+            answerContainer.appendChild(buttonEl);
 
-                shuffledOptions.forEach(option => {
-                    const button = document.createElement('button');
-                    // Add font-mono if options look like code
-                    const isCodeLike = option.includes('←') || option.includes('THEN') || option.includes('DO');
-                    button.className = `quiz-option w-full p-3 text-left border-2 border-gray-300 rounded-lg hover:bg-gray-100 ${isCodeLike ? 'font-mono text-sm' : ''}`;
-                    button.innerText = option;
-                    // Pass necessary info to the selectMCAnswer function
-                    button.onclick = () => selectMCAnswer(button, option, currentQuestion, questionNumber);
-                    optionsDiv.appendChild(button);
-                });
-                questionDiv.appendChild(optionsDiv);
-            }
-            quizContainer.appendChild(questionDiv);
-        });
-    }
+            // Append container and feedback to the main question div
+            questionDiv.appendChild(answerContainer);
+            questionDiv.appendChild(feedbackEl);
+
+            // Add event listener DIRECTLY to the created button element
+            buttonEl.addEventListener('click', () => {
+                checkTypedAnswer(questionNumber);
+            });
+
+        } else { // Default to Multiple Choice if type is "mc" or undefined
+            // Generate Multiple Choice Buttons
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+            const shuffledOptions = shuffleArray([...currentQuestion.options]); // Shuffle options
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                // Add font-mono if options look like code
+                const isCodeLike = option.includes('←') || option.includes('THEN') || option.includes('DO') || option.includes('IF') || option.includes('WHILE') || option.includes('RETURN') || option.includes('ARRAY');
+                button.className = `quiz-option w-full p-3 text-left border-2 border-gray-300 rounded-lg hover:bg-gray-100 ${isCodeLike ? 'font-mono text-sm' : ''}`;
+                button.innerText = option;
+                // Pass necessary info to the selectMCAnswer function
+                button.onclick = () => selectMCAnswer(button, option, currentQuestion, questionNumber);
+                optionsDiv.appendChild(button);
+            });
+            questionDiv.appendChild(optionsDiv);
+        }
+        quizContainer.appendChild(questionDiv);
+    });
+}
 
     // --- ⭐ UPDATED: selectMCAnswer Function (for Multiple Choice) ---
     function selectMCAnswer(selectedButton, selectedOption, currentQuestion, questionNumber) {
