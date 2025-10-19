@@ -37,7 +37,7 @@
     import { auth, db } from '../firebase-init.js'; // Adjusted path
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
     import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-    import { quizzes } from '../quizzes.js'; // Adjusted path
+    import { quizzes } from './quizzes.js'; // Adjusted path
 
     // --- Get URL Params & Quiz Data ---
     const urlParams = new URLSearchParams(window.location.search);
